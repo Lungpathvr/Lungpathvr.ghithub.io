@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestro Tiempo Juntos ❤️</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff5f7;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-image: url('https://i.pinimg.com/originals/8d/1a/3d/8d1a3d5f8e7e6a2e5a8f3a2e5a8f3a2e.png');
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        
+        .seccion {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 600px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 107, 129, 0.3);
+        }
+        
+        h1, h2 {
+            color: #d23369;
+            font-family: 'Dancing Script', cursive;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        #contador-relacion {
+            font-size: 1.5rem;
+            color: #ff6b81;
+            margin: 25px 0;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .tiempo-box {
+            background: rgba(255, 182, 193, 0.3);
+            border-radius: 10px;
+            padding: 8px 12px;
+            min-width: 70px;
+        }
+        
+        .tiempo-box span {
+            font-size: 1rem;
+            display: block;
+            color: #d23369;
+        }
+        
+        .mes {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .dia.aniversario {
+            background: #ff6b81;
+            color: white;
+            font-weight: bold;
+            transform: scale(1.1);
+            box-shadow: 0 3px 10px rgba(210, 51, 105, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .dia.aniversario::after {
+            content: '❤️';
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Reloj de relación con minutos y segundos -->
+    <div class="seccion">
+        <h1>Nuestro Tiempito</h1>
+        <p>❤️<br></p>
+        
+        <div id="contador-relacion">
+            <div class="tiempo-box">
+                <span id="anos">0</span>
+                <span>Años</span>
+            </div>
+            <div class="tiempo-box">
+                <span id="meses">0</span>
+                <span>Meses</span>
+            </div>
+            <div class="tiempo-box">
+                <span id="dias">0</span>
+                <span>Días</span>
+            </div>
+            <div class="tiempo-box">
+                <span id="horas">0</span>
+                <span>Horas</span>
+            </div>
+            <div class="tiempo-box">
+                <span id="minutos">0</span>
+                <span>Minutos</span>
+            </div>
+            <div class="tiempo-box">
+                <span id="segundos">0</span>
+                <span>Segundos</span>
+            </div>
+        </div>
+        
+        <p id="dias-totales">0 días exactos de felicidad</p>
+        <p id="proximo-aniversario"></p>
+    </div>
+    
+    <!-- Calendario preciso -->
+    <div class="seccion">
+        <h2>Nuestros Días Especiales</h2>
+        <div class="mes" id="calendario-mes"></div>
+    </div>
+
+    <script>
+        // FECHA EXACTA DE INICIO (9/9/2024 12:00 PM)
+        const fechaInicio = new Date(2024, 8, 9, 12, 0, 0); // Mes 8 = septiembre (0-11)
+        
+        // FUNCIÓN PARA AÑOS BISIESTOS
+        function esBisiesto(año) {
+            return (año % 4 === 0 && año % 100 !== 0) || año % 400 === 0;
+        }
+        
+        // CÁLCULO PRECISO DEL TIEMPO TRANSCURRIDO (CON MINUTOS Y SEGUNDOS)
+        function actualizarReloj() {
+            const ahora = new Date();
+            
+            // 1. Calcular diferencia exacta en milisegundos
+            let diferencia = ahora - fechaInicio;
+            
+            // 2. Calcular años completos considerando bisiestos
+            let años = 0;
+            let fechaTemp = new Date(fechaInicio);
+            
+            while (fechaTemp.getFullYear() < ahora.getFullYear()) {
+                const diasEnAño = esBisiesto(fechaTemp.getFullYear()) ? 366 : 365;
+                if (diferencia >= diasEnAño * 24 * 60 * 60 * 1000) {
+                    años++;
+                    diferencia -= diasEnAño * 24 * 60 * 60 * 1000;
+                    fechaTemp.setFullYear(fechaTemp.getFullYear() + 1);
+                } else {
+                    break;
+                }
+            }
+            
+            // 3. Calcular meses completos (preciso)
+            let meses = 0;
+            while (fechaTemp < ahora) {
+                const ultimoDiaMes = new Date(
+                    fechaTemp.getFullYear(),
+                    fechaTemp.getMonth() + 1,
+                    0
+                ).getDate();
+                
+                const milisegundosMes = ultimoDiaMes * 24 * 60 * 60 * 1000;
+                
+                if (diferencia >= milisegundosMes) {
+                    meses++;
+                    diferencia -= milisegundosMes;
+                    fechaTemp.setMonth(fechaTemp.getMonth() + 1);
+                } else {
+                    break;
+                }
+            }
+            
+            // 4. Calcular días, horas, minutos y segundos restantes
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            diferencia %= (1000 * 60 * 60 * 24);
+            
+            const horas = Math.floor(diferencia / (1000 * 60 * 60));
+            diferencia %= (1000 * 60 * 60);
+            
+            const minutos = Math.floor(diferencia / (1000 * 60));
+            diferencia %= (1000 * 60);
+            
+            const segundos = Math.floor(diferencia / 1000);
+            
+            // Días totales exactos
+            const diasTotales = Math.floor((ahora - fechaInicio) / (1000 * 60 * 60 * 24));
+            
+            // Próximo mesiversario
+            const proxMesiversario = new Date(fechaInicio);
+            proxMesiversario.setMonth(proxMesiversario.getMonth() + meses + 1);
+            
+            // Actualizar DOM
+            document.getElementById('anos').textContent = años;
+            document.getElementById('meses').textContent = meses;
+            document.getElementById('dias').textContent = dias;
+            document.getElementById('horas').textContent = horas;
+            document.getElementById('minutos').textContent = minutos;
+            document.getElementById('segundos').textContent = segundos;
+            document.getElementById('dias-totales').textContent = `${diasTotales} días exactos de felicidad`;
+            document.getElementById('proximo-aniversario').textContent = 
+                `Próximo mesiversario: ${proxMesiversario.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })}`;
+        }
+        
+        // CALENDARIO PRECISO (considera meses con diferente duración)
+        function generarCalendario() {
+            const hoy = new Date();
+            const mesActual = hoy.getMonth();
+            const añoActual = hoy.getFullYear();
+            
+            // Obtener último día del mes (considerando febrero en bisiestos)
+            const ultimoDia = new Date(añoActual, mesActual + 1, 0).getDate();
+            
+            // Generar calendario
+            let calendarioHTML = '';
+            const diasSemana = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+            
+            // Encabezados de días
+            diasSemana.forEach(dia => {
+                calendarioHTML += `<div style="font-weight:bold;color:#ff6b81;padding:10px;">${dia}</div>`;
+            });
+            
+            // Primer día del mes
+            const primerDia = new Date(añoActual, mesActual, 1).getDay();
+            
+            // Espacios vacíos
+            for (let i = 0; i < primerDia; i++) {
+                calendarioHTML += `<div style="padding:12px 0;"></div>`;
+            }
+            
+            // Días del mes
+            for (let dia = 1; dia <= ultimoDia; dia++) {
+                const esHoy = (dia === hoy.getDate()) && (mesActual === hoy.getMonth());
+                const esAniversario = (dia === 9); // Todos los días 9
+                
+                let estilo = "padding:12px 0;border-radius:50%;background:rgba(248,248,248,0.7);";
+                if (esAniversario) estilo += "background:#ff6b81;color:white;font-weight:bold;transform:scale(1.1);box-shadow:0 3px 10px rgba(210,51,105,0.3);";
+                if (esHoy) estilo += "border:2px solid #d23369;background:rgba(255,255,255,0.9);";
+                
+                calendarioHTML += `<div style="${estilo}">${dia}</div>`;
+            }
+            
+            document.getElementById('calendario-mes').innerHTML = calendarioHTML;
+        }
+        
+        // Iniciar
+        setInterval(actualizarReloj, 1000);
+        actualizarReloj();
+        generarCalendario();
+    </script>
+</body>
+</html>
