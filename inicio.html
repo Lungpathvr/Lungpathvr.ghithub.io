@@ -4,17 +4,229 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Te Amo Nata 💖</title>
-  <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff5f7;
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Corazones animados */
+    .corazones-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .corazon {
+      position: absolute;
+      font-size: 20px;
+      color: #ff6b81;
+      opacity: 0;
+      animation: caer 10s linear infinite;
+    }
+    
+    .delay1 { animation-delay: 2s; }
+    .delay2 { animation-delay: 4s; }
+    .delay3 { animation-delay: 6s; }
+    .delay4 { animation-delay: 8s; }
+    
+    @keyframes caer {
+      0% {
+        top: -10%;
+        opacity: 0;
+        transform: translateX(0) rotate(0deg);
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+        transform: translateX(100px) rotate(360deg);
+      }
+    }
+    
+    /* Carta principal */
+    .carta {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .carta h1 {
+      font-family: 'Great Vibes', cursive;
+      color: #d23369;
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .carta p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .firma {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #ff6b81;
+      margin-top: 30px;
+    }
+    
+    /* Galería de recuerdos */
+    .galeria {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+    
+    .galeria h2 {
+      font-family: 'Great Vibes', cursive;
+      color: #d23369;
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+    }
+    
+    .imagenes {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    
+    .imagenes a {
+      text-decoration: none;
+      color: #333;
+    }
+    
+    .imagen {
+      width: 200px;
+      height: 200px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+      background: white;
+    }
+    
+    .imagen:hover {
+      transform: translateY(-10px);
+    }
+    
+    .imagen img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    
+    .imagen p {
+      margin: 10px 0;
+      font-weight: 500;
+    }
+    
+    /* Frases románticas */
+    .frases {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .frases h2 {
+      font-family: 'Great Vibes', cursive;
+      color: #d23369;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .frases ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .frases li {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      color: #ff6b81;
+    }
+    
+    /* Máquina de escribir */
+    .final {
+      text-align: center;
+      margin: 50px 0;
+      padding: 20px;
+    }
+    
+    .typewriter {
+      font-family: 'Great Vibes', cursive;
+      color: #d23369;
+      font-size: 2.5rem;
+      overflow: hidden;
+      border-right: 3px solid #ff6b81;
+      white-space: nowrap;
+      margin: 0 auto;
+      letter-spacing: 2px;
+      animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #ff6b81 }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .carta, .frases {
+        margin: 20px;
+        padding: 20px;
+      }
+      
+      .imagenes {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .typewriter {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <!-- Fondo de corazones animados -->
   <div class="corazones-container">
-    <div class="corazon"></div>
-    <div class="corazon delay1"></div>
-    <div class="corazon delay2"></div>
-    <div class="corazon delay3"></div>
-    <div class="corazon delay4"></div>
+    <div class="corazon">❤</div>
+    <div class="corazon delay1">❤</div>
+    <div class="corazon delay2">❤</div>
+    <div class="corazon delay3">❤</div>
+    <div class="corazon delay4">❤</div>
   </div>
 
   <!-- Carta principal -->
