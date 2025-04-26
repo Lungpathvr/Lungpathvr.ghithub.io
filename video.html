@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Videitos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/xd.css">
+</head>
+<body>
+    <div class="galeria-momentos">
+        <h1 class="titulo-galeria">Nuestros <span>Videitos</span></h1>
+        <p class="subtitulo">nuestra historia en videitos amur</p>
+        
+        <div class="video-gallery">
+            <!-- Video 1 - Ejemplo -->
+            <div class="video-item">
+                <div class="video-wrapper" onclick="openLightbox('img/videos/video1.MP4')">
+                    <video class="video-preview" muted loop autoplay playsinline>
+                        <source src="img/videos/video1.MP4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3>muuuuuuuuua</h3>
+                    <small>25/abril/2024</small>
+                </div>
+            </div>
+            
+            <!-- Video 2 - Ejemplo -->
+            <div class="video-item">
+                <div class="video-wrapper" onclick="openLightbox('img/videos/video2.MP4')">
+                    <video class="video-preview" muted loop autoplay playsinline>
+                        <source src="img/videos/video2.MP4" type="video/mp4">
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-icon">▶</div>
+                    </div>
+                </div>
+                <div class="video-info">
+                    <h3>mimiditos</h3>
+                    <small>6/Frebrero/2024</small>
+                </div>
+            </div>
+            
+            <!-- Añade más videos aquí -->
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div id="videoLightbox" class="video-lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <video id="fullscreenVideo" controls>
+                Tu navegador no soporta videos.
+            </video>
+        </div>
+    </div>
+
+    <script src="js/videos.js"></script>
+</body>
+</html>

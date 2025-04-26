@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros Momentos Mágicos</title>
+    <!-- Fuente cursiva -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/xd.css">
+</head>
+<body>
+    <div class="galeria-momentos">
+        <h1 class="titulo-galeria">Nuestras <span>fotitos</span> </h1>
+        <p class="subtitulo">Contigo hasta el fin del mundo</p>
+        
+        <div class="collage">
+            <!-- Fotos originales -->
+            <div class="foto-container">
+                <img src="img/foto1.jpeg" alt="Nuestro primer día">
+                <div class="descripcion-foto">
+                    <p>Cuando todo comenzó ✨</p>
+                    <small>01/Ene/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container grande">
+                <img src="img/foto2.jpeg" alt="Viaje juntos">
+                <div class="descripcion-foto">
+                    <p>Nuestra primera aventura</p>
+                    <small>15/Feb/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container ancha">
+                <img src="img/foto3.jpeg" alt="Celebración">
+                <div class="descripcion-foto">
+                    <p>Riendo como siempre</p>
+                    <small>8/Mar/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container">
+                <img src="img/foto4.jpeg" alt="Atardecer">
+                <div class="descripcion-foto">
+                    <p>El cielo se pintó para nosotros</p>
+                    <small>22/Abr/2023</small>
+                </div>
+            </div>
+
+            <!-- Nuevas fotos (15-25) -->
+            <div class="foto-container grande">
+                <img src="img/nuevas fotos/foto15.JPG" alt="Momento especial 15">
+                <div class="descripcion-foto">
+                    <p>Un día para recordar</p>
+                    <small>10/May/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container">
+                <img src="img/nuevas fotos/foto16.JPG" alt="Momento especial 16">
+                <div class="descripcion-foto">
+                    <p>Juntos frente al mar</p>
+                    <small>25/May/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container ancha">
+                <img src="img/nuevas fotos/foto17.JPG" alt="Momento especial 17">
+                <div class="descripcion-foto">
+                    <p>Celebrando nuestro amor</p>
+                    <small>3/Jun/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container">
+                <img src="img/nuevas fotos/foto18.JPG" alt="Momento especial 18">
+                <div class="descripcion-foto">
+                    <p>Detalles que valen oro</p>
+                    <small>18/Jun/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container grande">
+                <img src="img/nuevas fotos/foto19.JPG" alt="Momento especial 19">
+                <div class="descripcion-foto">
+                    <p>Complicidad única</p>
+                    <small>30/Jun/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container ancha">
+                <img src="img/nuevas fotos/foto20.JPG" alt="Momento especial 20">
+                <div class="descripcion-foto">
+                    <p>Aventuras compartidas</p>
+                    <small>7/Jul/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container">
+                <img src="img/nuevas fotos/foto21.JPG" alt="Momento especial 21">
+                <div class="descripcion-foto">
+                    <p>Miradas que dicen todo</p>
+                    <small>22/Jul/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container">
+                <img src="img/nuevas fotos/foto22.JPG" alt="Momento especial 22">
+                <div class="descripcion-foto">
+                    <p>El amor en pequeños gestos</p>
+                    <small>5/Ago/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container grande">
+                <img src="img/nuevas fotos/foto23.JPG" alt="Momento especial 23">
+                <div class="descripcion-foto">
+                    <p>Nuestro lugar favorito</p>
+                    <small>20/Ago/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container ancha">
+                <img src="img/nuevas fotos/foto24.heic" alt="Momento especial 24">
+                <div class="descripcion-foto">
+                    <p>Promesas bajo las estrellas</p>
+                    <small>12/Sep/2023</small>
+                </div>
+            </div>
+            
+            <div class="foto-container">
+                <img src="img/nuevas fotos/foto25.heic" alt="Momento especial 25">
+                <div class="descripcion-foto">
+                    <p>El inicio de siempre</p>
+                    <small>28/Sep/2023</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mensaje-final">
+            <p> eres la persona, la que más amo en este mundo</p>
+        </div>
+    </div>
+
+ <!-- Lightbox (estructura nueva) -->
+ <div id="lightbox" class="lightbox">
+    <span class="close-lightbox">&times;</span>
+    <img class="lightbox-img" id="lightbox-image">
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+</div>
+
+<!-- Script para el lightbox (nuevo) -->
+<script>
+    // Abrir lightbox al hacer clic en cualquier imagen
+    document.querySelectorAll('.foto-container img').forEach(img => {
+        img.addEventListener('click', () => {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-image');
+            const caption = document.getElementById('lightbox-caption');
+            
+            lightbox.style.display = 'block';
+            lightboxImg.src = img.src;
+            caption.textContent = img.alt;
+        });
+    });
+
+    // Cerrar lightbox
+    document.querySelector('.close-lightbox').addEventListener('click', () => {
+        document.getElementById('lightbox').style.display = 'none';
+    });
+
+    // Cerrar al hacer clic fuera de la imagen
+    document.getElementById('lightbox').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('lightbox')) {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    });
+
+    // Cerrar con tecla ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    });
+</script>
+</body>
+</html>

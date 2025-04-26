@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestras Metitas de Amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/xd.css">
+</head>
+<body>
+    <!-- Lluvia de corazones (generada por JS) -->
+    <div id="lluviaCorazones"></div>
+    
+    <header>
+        <h1>Nuestras Metitas de Amor</h1>
+        <p> juntos podemos cumplir muchos Sueños</p>
+    </header>
+    
+    <div class="container">
+        <div class="metas-container">
+            <!-- Metas a corto plazo -->
+            <div class="meta-categoria corto-plazo">
+                <h2>Metitas a corto plazo <span>✨</span></h2>
+                
+                <div class="meta-item">Cumplir nuestros 8 mesecitos juntitos <span>📅</span></div>
+                <div class="meta-item">Celebrar nuestro primer añito de amor <span>🎉</span></div>
+                <div class="meta-item">Ir juntitos a conocer la nievecita <span>⛄</span></div>
+                <div class="meta-item">Pasar mucho tiempito a tu ladito <span>💑</span></div>
+                
+                <h3 style="color: #ff9e7d; margin-top: 20px;">Hacer todas las cositas pendientes:</h3>
+                <div class="meta-item">Armarnos nuestra torreíta <span>🏰</span></div>
+                <div class="meta-item">Salir por papitas <span>🍟</span></div>
+                <div class="meta-item">Hacer figuritas de plastilina juntitos <span>🎨</span></div>
+                <div class="meta-item">Ir al cafecito Color a pintar cositas <span>☕</span></div>
+                <div class="meta-item">Terminar esas peliculitas que dejamos a medias <span>🎬</span></div>
+                <div class="meta-item">Ver la pelicula de Chimuelito cuando salga <span>🐉</span></div>
+                <div class="meta-item">Crear un álbum con nuestras fotitos impresas <span>📸</span></div>
+                <div class="meta-item">Tener ropita que combine, como camisitas iguales <span>👫</span></div>
+                <div class="meta-item">Jugar al Cuphead juntitos <span>🎮</span></div>
+                <div class="meta-item">Conocer mejor a tu familita y que conozcas más a la mía <span>👨‍👩‍👧‍👦</span></div>
+                <div class="meta-item">Hacer una cajita de recuerditos para abrirla algún día lejano <span>📦</span></div>
+                <div class="meta-item">Pasar la Navidita y el Año Nuevo juntitos <span>🎄</span></div>
+            </div>
+            
+            <!-- Metas a mediano plazo -->
+            <div class="meta-categoria mediano-plazo">
+                <h2>Metitas a mediano plazo <span>🌟</span></h2>
+                
+                <div class="meta-item">Que nos dejen pasar días completitos juntos sin separarnos <span>🌞🌙</span></div>
+                <div class="meta-item">Graduarme y apoyarte mientras terminas tus estudios <span>🎓</span></div>
+                <div class="meta-item">Irnos a vivir juntitos cuando empieces tus prácticas <span>🏠</span></div>
+                <div class="meta-item">Casarnos después de la universidad <span>💍</span></div>
+                <div class="meta-item">Viajar por muchos lugarcitos de la manita <span>✈️</span></div>
+                <div class="meta-item">Tener mascotitas juntos <span>🐶🐱</span></div>
+                <div class="meta-item">Decorar nuestra casita para cada fechita especial <span>🎊</span></div>
+                <div class="meta-item">Celebrar cada logrito nuestro, por pequeñito que sea <span>🎯</span></div>
+            </div>
+            
+            <!-- Metas a largo plazo -->
+            <div class="meta-categoria largo-plazo">
+                <h2>Metitas a largo plazo <span>🌠</span></h2>
+                
+                <div class="meta-item">Decidir en qué rinconcito del mundo haremos nuestra vidita <span>🌎</span></div>
+                <div class="meta-item">Construir nuestra casita juntitos <span>🏡</span></div>
+                <div class="meta-item">Platicar si en algún futuro queremos hijitos <span>👶</span></div>
+                <div class="meta-item">Seguir creciendo juntitos en amor y sueñitos <span>💞</span></div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p> quiero cumplir cada una de nuestras metas mi amor<span class="corazon">❤</span></p>
+    </footer>
+
+    <script>
+        // Crear lluvia de corazones
+        function crearLluvia() {
+            const corazones = ['❤️'];
+            const lluviaContainer = document.getElementById('lluviaCorazones');
+            
+            // Crear 50 corazones iniciales
+            for (let i = 0; i < 50; i++) {
+                crearCorazon();
+            }
+            
+            // Crear nuevos corazones cada cierto tiempo
+            setInterval(crearCorazon, 300);
+            
+            function crearCorazon() {
+                const corazon = document.createElement('div');
+                corazon.className = 'corazon-lluvia';
+                corazon.innerHTML = corazones[Math.floor(Math.random() * corazones.length)];
+                
+                // Posición aleatoria
+                corazon.style.left = Math.random() * 100 + 'vw';
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 20 + 10;
+                corazon.style.fontSize = size + 'px';
+                
+                // Duración de animación aleatoria
+                const duration = Math.random() * 5 + 5;
+                corazon.style.animationDuration = duration + 's';
+                
+                // Retraso inicial aleatorio
+                corazon.style.animationDelay = Math.random() * 5 + 's';
+                
+                lluviaContainer.appendChild(corazon);
+                
+                // Eliminar el corazón después de que termine la animación
+                setTimeout(() => {
+                    corazon.remove();
+                }, duration * 1000);
+            }
+        }
+        
+        // Iniciar cuando la página cargue
+        window.onload = crearLluvia;
+    </script>
+</body>
+</html>

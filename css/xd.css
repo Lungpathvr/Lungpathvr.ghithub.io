@@ -1,0 +1,581 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff0f5;
+    font-family: 'Dancing Script', cursive;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Contenedor principal */
+.galeria-momentos {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Títulos */
+.titulo-galeria {
+    font-size: 3.5rem;
+    color: #d23369;
+    margin: 20px 0;
+}
+
+.titulo-galeria span {
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitulo {
+    font-size: 1.8rem;
+    color: #ff6b81;
+    margin-bottom: 40px;
+    font-style: italic;
+}
+
+/* ------------------------- */
+/* GALERÍA MEJORADA (Masonry) */
+/* ------------------------- */
+.collage {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-auto-rows: 200px; /* Altura base ajustable */
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.foto-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(210, 51, 105, 0.2);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+/* Ajuste mágico para fotos */
+.foto-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center; /* Enfoca el centro de la imagen */
+    display: block;
+}
+
+/* Tipos de fotos (conservan hover y descripción) */
+.grande {
+    grid-row: span 2; /* 2x altura base (400px) */
+}
+
+.ancha {
+    grid-column: span 2;
+}
+
+/* Efecto hover y descripción (se mantienen igual) */
+.foto-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(210, 51, 105, 0.3);
+}
+
+.descripcion-foto {
+    position: absolute;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(210, 51, 105, 0.9), transparent);
+    color: white;
+    padding: 20px;
+    transition: bottom 0.4s ease;
+}
+
+.foto-container:hover .descripcion-foto {
+    bottom: 0;
+}
+
+.descripcion-foto p {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.descripcion-foto small {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* ------------------------- */
+/* Resto de estilos (igual) */
+/* ------------------------- */
+.mensaje-final {
+    font-size: 2.2rem;
+    color: #d23369;
+    margin-top: 50px;
+    padding: 20px;
+    border-top: 2px dashed #ff8fab;
+    font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ancha {
+        grid-column: span 1;
+    }
+    
+    .titulo-galeria {
+        font-size: 2.5rem;
+    }
+    
+    /* Opcional: ajustar altura base en móviles */
+    .collage {
+        grid-auto-rows: 150px;
+    }
+}
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            text-align: center;
+            animation: fadeIn 0.3s ease;
+        }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 80vh;
+            margin: 5% auto;
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(210, 51, 105, 0.6);
+        }
+        .lightbox-caption {
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            margin-top: 10px;
+        }
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-lightbox:hover {
+            color: #ff6b81;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Cursor de clic en fotos */
+        .foto-container img {
+            cursor: zoom-in;
+        }
+
+        <!-- Estilos para videos -->
+        /* ===== GALERÍA DE VIDEOS ===== */
+/* ===== GALERÍA DE VIDEOS ===== */
+.video-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 20px;
+}
+
+.video-item {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
+    transition: all 0.3s ease;
+}
+
+.video-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(210, 51, 105, 0.3);
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%; /* Relación 16:9 */
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.video-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(210, 51, 105, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.video-wrapper:hover .video-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    background: rgba(210, 51, 105, 0.8);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+}
+
+.video-info {
+    padding: 15px;
+    font-family: 'Dancing Script', cursive;
+    color: #d23369;
+}
+
+.video-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.video-info small {
+    font-size: 1rem;
+    color: #ff6b81;
+}
+
+/* ===== LIGHTBOX ===== */
+.video-lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.video-lightbox video {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 8px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #ff6b81;
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .video-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .lightbox-content {
+        width: 95%;
+    }
+}
+
+<style>
+body {
+    background-color: #fff5f7;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(45deg, #ff6b81, #d23369);
+    padding: 30px;
+    border-radius: 0 0 20px 20px;
+    color: white;
+    box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    margin: 0;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    color: #d23369;
+    font-size: 2.5rem;
+    border-bottom: 2px dashed #ff6b81;
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+.metas-container {
+    display: grid;
+    gap: 25px;
+}
+
+.meta-categoria {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1;
+}
+
+.meta-item {
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.meta-item:before {
+    content: "❤";
+    position: absolute;
+    left: 0;
+    color: #ff6b81;
+}
+
+.corto-plazo {
+    border-left: 5px solid #ff9e7d;
+}
+
+.mediano-plazo {
+    border-left: 5px solid #ff6b81;
+}
+
+.largo-plazo {
+    border-left: 5px solid #d23369;
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #d23369;
+    position: relative;
+    z-index: 1;
+}
+
+.corazon {
+    animation: latido 1.5s infinite;
+    display: inline-block;
+}
+
+@keyframes latido {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Corazones rojos que caen */
+.corazon-lluvia {
+    position: fixed;
+    top: -10%;
+    z-index: 0;
+    animation: caer 10s linear infinite;
+    font-size: 20px;
+    color: #ff6b81;
+    opacity: 0.7;
+    text-shadow: 0 0 5px rgba(255, 107, 129, 0.5);
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-10%) rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+
+body {
+    background-color: #fff5f7;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    background: linear-gradient(45deg, #ff6b81, #d23369);
+    padding: 30px;
+    border-radius: 0 0 20px 20px;
+    color: white;
+    box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    margin: 0;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    color: #d23369;
+    font-size: 2.5rem;
+    border-bottom: 2px dashed #ff6b81;
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+.metas-container {
+    display: grid;
+    gap: 25px;
+}
+
+.meta-categoria {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 1;
+}
+
+.meta-item {
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.meta-item:before {
+    content: "❤";
+    position: absolute;
+    left: 0;
+    color: #ff6b81;
+}
+
+.corto-plazo {
+    border-left: 5px solid #ff9e7d;
+}
+
+.mediano-plazo {
+    border-left: 5px solid #ff6b81;
+}
+
+.largo-plazo {
+    border-left: 5px solid #d23369;
+}
+
+footer {
+    text-align: center;
+    margin-top: 50px;
+    padding: 20px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: #d23369;
+    position: relative;
+    z-index: 1;
+}
+
+.corazon {
+    animation: latido 1.5s infinite;
+    display: inline-block;
+}
+
+@keyframes latido {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Corazones que caen */
+.corazon-lluvia {
+    position: fixed;
+    top: -10%;
+    z-index: 0;
+    animation: caer 10s linear infinite;
+    font-size: 20px;
+    color: #ff6b81;
+    opacity: 0.7;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-10%) rotate(0deg);
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
