@@ -3,24 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Besos y Abrazos</title>
+    <title>Contador de Amor</title>
     <style>
-        .contador-container {
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff5f5;
             text-align: center;
             padding: 20px;
-            background: rgba(255, 182, 193, 0.3);
-            border-radius: 15px;
-            max-width: 400px;
-            margin: 30px auto;
-            font-family: Arial, sans-serif;
+            margin: 0;
         }
-        
-        .contador {
-            font-size: 3rem;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
             color: #d23369;
-            margin: 10px 0;
+            margin-bottom: 30px;
         }
-        
+        .contadores {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .contador {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .contador:hover {
+            transform: translateY(-5px);
+        }
+        .numero {
+            font-size: 3.5rem;
+            color: #d23369;
+            margin: 15px 0;
+            font-weight: bold;
+        }
         .boton {
             background: #ff6b81;
             color: white;
@@ -30,89 +52,135 @@
             font-size: 1.2rem;
             margin: 10px;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: background 0.3s ease;
         }
-        
         .boton:hover {
-            transform: scale(1.1);
+            background: #d23369;
         }
-        
-        /* Efecto de corazones */
-        @keyframes volar {
-            to { transform: translateY(-100px); opacity: 0; }
+        .emoji {
+            font-size: 2rem;
         }
-        
-        .corazon {
-            position: fixed;
-            font-size: 30px;
-            animation: volar 2s forwards;
-            pointer-events: none;
+        footer {
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 600px) {
+            .contadores {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="contador-container">
-        <h2 style="color: #d23369;">Besos y Abrazos Virtuales</h2>
+    <div class="container">
+        <h1>Contador de Amor Compartido ❤️</h1>
         
-        <div>
-            <p>Besitos enviados:</p>
-            <div class="contador" id="contador-besos">0</div>
-            <button class="boton" id="btn-beso">💋 Enviar Beso</button>
+        <div class="contadores">
+            <div class="contador">
+                <h2>Besos recibidos</h2>
+                <div class="emoji">💋</div>
+                <div class="numero" id="contador-besos">0</div>
+                <button class="boton" id="btn-beso">Enviar Beso</button>
+            </div>
+            
+            <div class="contador">
+                <h2>Abrazos recibidos</h2>
+                <div class="emoji">🤗</div>
+                <div class="numero" id="contador-abrazos">0</div>
+                <button class="boton" id="btn-abrazo">Enviar Abrazo</button>
+            </div>
         </div>
         
-        <div style="margin-top: 30px;">
-            <p>Abrazos enviados:</p>
-            <div class="contador" id="contador-abrazos">0</div>
-            <button class="boton" id="btn-abrazo">🤗 Enviar Abrazo</button>
-        </div>
+        <footer>
+            Cada beso y abrazo cuenta en nuestra historia juntos ❤️
+        </footer>
     </div>
 
+    <!-- SDKs de Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
     <script>
-        // 1. CARGAR CONTADORES AL INICIAR
-        function cargarContadores() {
-            // Besos
-            if(localStorage.getItem('besos')) {
-                document.getElementById('contador-besos').textContent = 
-                    localStorage.getItem('besos');
-            } else {
-                localStorage.setItem('besos', '0');
-            }
-            
-            // Abrazos
-            if(localStorage.getItem('abrazos')) {
-                document.getElementById('contador-abrazos').textContent = 
-                    localStorage.getItem('abrazos');
-            } else {
-                localStorage.setItem('abrazos', '0');
+        // Configuración de Firebase (ya incluiste la tuya)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4SZ_166kJl99FwImCNxTrDvA_oRo81qg",
+            authDomain: "contadordeamor-9462d.firebaseapp.com",
+            projectId: "contadordeamor-9462d",
+            storageBucket: "contadordeamor-9462d.firebasestorage.app",
+            messagingSenderId: "1046727491357",
+            appId: "1:1046727491357:web:7a15fadf29557077212bf4"
+        };
+
+        // Inicializar Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Referencia al documento en Firestore
+        const contadorRef = db.collection('contadores').doc('amor');
+
+        // Función para inicializar los contadores si no existen
+        async function inicializarContadores() {
+            const doc = await contadorRef.get();
+            if (!doc.exists) {
+                await contadorRef.set({
+                    besos: 0,
+                    abrazos: 0
+                });
             }
         }
-        
-        // 2. FUNCIÓN PARA ENVIAR BESOS/ABRAZOS
+
+        // Actualizar datos en tiempo real
+        contadorRef.onSnapshot((doc) => {
+            if (doc.exists) {
+                const data = doc.data();
+                document.getElementById('contador-besos').textContent = data.besos || 0;
+                document.getElementById('contador-abrazos').textContent = data.abrazos || 0;
+                
+                // Efecto visual al actualizar
+                if (data.besos > parseInt(document.getElementById('contador-besos').textContent)) {
+                    document.getElementById('contador-besos').classList.add('pulse');
+                    setTimeout(() => {
+                        document.getElementById('contador-besos').classList.remove('pulse');
+                    }, 500);
+                }
+                
+                if (data.abrazos > parseInt(document.getElementById('contador-abrazos').textContent)) {
+                    document.getElementById('contador-abrazos').classList.add('pulse');
+                    setTimeout(() => {
+                        document.getElementById('contador-abrazos').classList.remove('pulse');
+                    }, 500);
+                }
+            }
+        });
+
+        // Función para enviar besos o abrazos con animación
         function enviarAmor(tipo) {
-            // Crear efecto visual
-            const emoji = tipo === 'beso' ? '💋' : '🤗';
-            const corazon = document.createElement('div');
-            corazon.innerHTML = emoji;
-            corazon.className = 'corazon';
-            corazon.style.left = Math.random() * window.innerWidth + 'px';
-            corazon.style.bottom = '100px';
-            document.body.appendChild(corazon);
+            // Animación del botón
+            const boton = tipo === 'besos' ? document.getElementById('btn-beso') : document.getElementById('btn-abrazo');
+            boton.classList.add('clicked');
+            setTimeout(() => {
+                boton.classList.remove('clicked');
+            }, 300);
             
-            // Eliminar después de la animación
-            setTimeout(() => corazon.remove(), 2000);
-            
-            // Actualizar contador
-            const contador = parseInt(localStorage.getItem(tipo + 's')) + 1;
-            localStorage.setItem(tipo + 's', contador.toString());
-            document.getElementById('contador-' + tipo + 's').textContent = contador;
+            // Actualizar Firestore
+            contadorRef.update({
+                [tipo]: firebase.firestore.FieldValue.increment(1)
+            }).catch(error => {
+                console.error("Error al actualizar: ", error);
+                alert("Ocurrió un error al enviar tu " + (tipo === 'besos' ? 'beso' : 'abrazo'));
+            });
         }
-        
-        // 3. ASIGNAR EVENTOS A LOS BOTONES
-        document.getElementById('btn-beso').addEventListener('click', () => enviarAmor('beso'));
-        document.getElementById('btn-abrazo').addEventListener('click', () => enviarAmor('abrazo'));
-        
-        // 4. INICIAR AL CARGAR LA PÁGINA
-        window.onload = cargarContadores;
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', () => {
+            inicializarContadores();
+            
+            // Event listeners para los botones
+            document.getElementById('btn-beso').addEventListener('click', () => enviarAmor('besos'));
+            document.getElementById('btn-abrazo').addEventListener('click', () => enviarAmor('abrazos'));
+        });
     </script>
 </body>
 </html>
