@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Te Amo 💖</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+  <title>Para el Amor de Mi Vida 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
-    /* Estilos generales */
+    /* Estilos generales mejorados */
     body {
       margin: 0;
       padding: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: #fff5f7;
+      background: linear-gradient(135deg, #fff5f7 0%, #ffeef2 100%);
       color: #333;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
     }
     
-    /* Corazones animados */
-    .corazones-container {
+    /* Efecto de partículas de amor */
+    .particles-container {
       position: fixed;
       top: 0;
       left: 0;
@@ -26,249 +28,552 @@
       height: 100%;
       pointer-events: none;
       z-index: -1;
+      overflow: hidden;
     }
     
-    .corazon {
+    .particle {
       position: absolute;
-      font-size: 20px;
-      color: #ff6b81;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b81"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
       opacity: 0;
-      animation: caer 10s linear infinite;
+      animation: float 15s linear infinite;
     }
     
-    .delay1 { animation-delay: 2s; }
-    .delay2 { animation-delay: 4s; }
-    .delay3 { animation-delay: 6s; }
-    .delay4 { animation-delay: 8s; }
-    
-    @keyframes caer {
+    @keyframes float {
       0% {
-        top: -10%;
+        transform: translateY(100vh) rotate(0deg) scale(0.5);
         opacity: 0;
-        transform: translateX(0) rotate(0deg);
       }
       10% {
-        opacity: 1;
+        opacity: 0.6;
       }
       90% {
-        opacity: 1;
+        opacity: 0.6;
       }
       100% {
-        top: 110%;
+        transform: translateY(-20vh) rotate(360deg) scale(1);
         opacity: 0;
-        transform: translateX(100px) rotate(360deg);
       }
     }
     
-    /* Carta principal */
+    /* Efecto de brillo romántico */
+    .romantic-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.2) 0%, transparent 30%),
+                  radial-gradient(circle at 80% 70%, rgba(255, 192, 203, 0.2) 0%, transparent 30%);
+      pointer-events: none;
+      z-index: -1;
+      animation: pulseGlow 8s ease-in-out infinite alternate;
+    }
+    
+    @keyframes pulseGlow {
+      0% { opacity: 0.3; }
+      100% { opacity: 0.7; }
+    }
+    
+    /* Carta principal mejorada */
     .carta {
       max-width: 800px;
-      margin: 40px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin: 60px auto;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(210, 51, 105, 0.15);
       text-align: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: fadeInUp 1.5s forwards 0.5s;
     }
     
     .carta h1 {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Dancing Script', cursive;
       color: #d23369;
-      font-size: 3rem;
-      margin-bottom: 20px;
+      font-size: 4rem;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(210, 51, 105, 0.2);
+      background: linear-gradient(45deg, #d23369, #ff6b81);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .carta h1::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #ff6b81, transparent);
     }
     
     .carta p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      margin-bottom: 15px;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      color: #555;
     }
     
     .firma {
       font-family: 'Great Vibes', cursive;
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: #ff6b81;
-      margin-top: 30px;
+      margin-top: 40px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+      transform: rotate(-5deg);
+      animation: heartBeat 2s infinite;
     }
     
-    /* Galería de recuerdos */
+    @keyframes heartBeat {
+      0% { transform: scale(1) rotate(-5deg); }
+      14% { transform: scale(1.1) rotate(-5deg); }
+      28% { transform: scale(1) rotate(-5deg); }
+      42% { transform: scale(1.1) rotate(-5deg); }
+      70% { transform: scale(1) rotate(-5deg); }
+    }
+    
+    /* Galería de recuerdos mejorada */
     .galeria {
-      max-width: 1000px;
-      margin: 50px auto;
-      padding: 0 20px;
+      max-width: 1100px;
+      margin: 80px auto;
+      padding: 0 30px;
       text-align: center;
+      transform: translateY(50px);
+      opacity: 0;
+      animation: fadeInUp 1.5s forwards 1s;
     }
     
     .galeria h2 {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Dancing Script', cursive;
       color: #d23369;
-      font-size: 2.5rem;
-      margin-bottom: 30px;
+      font-size: 3.5rem;
+      margin-bottom: 50px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .galeria h2::before, .galeria h2::after {
+      content: "✧";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff6b81;
+      font-size: 1.5rem;
+    }
+    
+    .galeria h2::before {
+      left: -40px;
+    }
+    
+    .galeria h2::after {
+      right: -40px;
     }
     
     .imagenes {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 30px;
+      justify-items: center;
     }
     
     .imagenes a {
       text-decoration: none;
       color: #333;
+      transition: all 0.3s ease;
     }
     
     .imagen {
       width: 200px;
-      height: 200px;
-      border-radius: 15px;
+      height: 230px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      box-shadow: 0 10px 20px rgba(210, 51, 105, 0.15);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
       background: white;
+      position: relative;
+    }
+    
+    .imagen::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(210, 51, 105, 0.1), rgba(255, 107, 129, 0.3));
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
     
     .imagen:hover {
-      transform: translateY(-10px);
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 15px 30px rgba(210, 51, 105, 0.25);
+    }
+    
+    .imagen:hover::before {
+      opacity: 1;
     }
     
     .imagen img {
       width: 100%;
-      height: 150px;
+      height: 160px;
       object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    
+    .imagen:hover img {
+      transform: scale(1.1);
     }
     
     .imagen p {
-      margin: 10px 0;
+      margin: 15px 0;
       font-weight: 500;
+      font-size: 1.1rem;
+      color: #d23369;
+      transition: color 0.3s ease;
     }
     
-    /* Frases románticas */
+    .imagen:hover p {
+      color: #ff6b81;
+    }
+    
+    /* Frases románticas mejoradas */
     .frases {
       max-width: 800px;
-      margin: 50px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      margin: 80px auto;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(210, 51, 105, 0.15);
       text-align: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transform: translateY(50px);
+      opacity: 0;
+      animation: fadeInUp 1.5s forwards 1.5s;
     }
     
     .frases h2 {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Dancing Script', cursive;
       color: #d23369;
-      font-size: 2.5rem;
-      margin-bottom: 20px;
+      font-size: 3rem;
+      margin-bottom: 30px;
+      position: relative;
+    }
+    
+    .frases h2::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #ff6b81, transparent);
     }
     
     .frases ul {
       list-style: none;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
     
     .frases li {
-      font-size: 1.2rem;
-      margin: 10px 0;
+      font-size: 1.3rem;
+      padding: 15px;
       color: #ff6b81;
+      background: rgba(255, 107, 129, 0.1);
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: fadeInRight 0.8s forwards;
     }
     
-    /* Máquina de escribir */
+    .frases li:nth-child(1) { animation-delay: 1.8s; }
+    .frases li:nth-child(2) { animation-delay: 2s; }
+    .frases li:nth-child(3) { animation-delay: 2.2s; }
+    .frases li:nth-child(4) { animation-delay: 2.4s; }
+    
+    .frases li:hover {
+      background: rgba(255, 107, 129, 0.2);
+      transform: scale(1.05);
+    }
+    
+    /* Máquina de escribir mejorada */
     .final {
       text-align: center;
-      margin: 50px 0;
-      padding: 20px;
+      margin: 80px 0;
+      padding: 40px;
+      position: relative;
+      transform: translateY(50px);
+      opacity: 0;
+      animation: fadeInUp 1.5s forwards 2s;
+    }
+    
+    .final::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 3px;
+      background: linear-gradient(to right, transparent, #ff6b81, transparent);
+    }
+    
+    .typewriter-container {
+      display: inline-block;
+      position: relative;
     }
     
     .typewriter {
-      font-family: 'Great Vibes', cursive;
+      font-family: 'Dancing Script', cursive;
       color: #d23369;
-      font-size: 2.5rem;
+      font-size: 3rem;
       overflow: hidden;
-      border-right: 3px solid #ff6b81;
       white-space: nowrap;
       margin: 0 auto;
       letter-spacing: 2px;
-      animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(45deg, #d23369, #ff6b81);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
+    .typewriter::after {
+      content: "|";
+      position: absolute;
+      right: 0;
+      color: #ff6b81;
+      animation: blink 0.7s infinite;
     }
     
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #ff6b81 }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
     
-    /* Responsive */
-    @media (max-width: 768px) {
+    /* Animaciones personalizadas */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    /* Responsive mejorado */
+    @media (max-width: 900px) {
       .carta, .frases {
-        margin: 20px;
-        padding: 20px;
+        margin: 40px 20px;
+        padding: 30px;
+      }
+      
+      .carta h1 {
+        font-size: 3rem;
+      }
+      
+      .galeria h2 {
+        font-size: 2.8rem;
       }
       
       .imagenes {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .typewriter {
+        font-size: 2.2rem;
+      }
+    }
+    
+    @media (max-width: 600px) {
+      .carta h1 {
+        font-size: 2.5rem;
+      }
+      
+      .galeria h2 {
+        font-size: 2.2rem;
+      }
+      
+      .galeria h2::before, .galeria h2::after {
+        display: none;
+      }
+      
+      .imagenes {
+        grid-template-columns: 1fr;
       }
       
       .typewriter {
         font-size: 1.8rem;
+        white-space: normal;
+      }
+      
+      .typewriter::after {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Fondo de corazones animados -->
-  <div class="corazones-container">
-    <div class="corazon">❤</div>
-    <div class="corazon delay1">❤</div>
-    <div class="corazon delay2">❤</div>
-    <div class="corazon delay3">❤</div>
-    <div class="corazon delay4">❤</div>
-  </div>
+  <!-- Efectos de fondo románticos -->
+  <div class="romantic-glow"></div>
+  <div class="particles-container" id="particles"></div>
 
   <!-- Carta principal -->
-  <section class="carta">
-    <h1>Para mi amorcito linda</h1>
+  <section class="carta animate__animated">
+    <h1>Para Mi Amor Hermosa</h1>
     <p>
-      Mi amor, quiero decirte que te amo mucho, y esta pequeña página será un lugarcito para que guardemos nuestros recuerdos
+      Mi vida, cada día a tu lado es un regalo del muy nindo. Esta página es nuestro pequeño luarcito donde guardaremos parte de nuestro amor.
     </p>
     <p>
-      Para que nosotros del Futuro podamos recordar cada momento De una manera muy linda
+      Para que cuando el tiempito pase, podamos revivir cada instante bonito que hemos compartido y los que están por venir.
     </p>
 
-    <p class="firma">Te Amu Mucho,<br>Matheu 💘</p>
+    <p class="firma">Con todo mi amor,<br>Matheu 💘</p>
   </section>
 
   <!-- Galería de recuerdos -->
   <section class="galeria">
-    <h2>Nuestros Momentos 💫</h2>
+    <h2>Nuestros Tesoros ✨</h2>
     <div class="imagenes">
-      <!-- Rutas relativas desde la carpeta raíz -->
-      <a href="fotos.html"><div class="imagen"><img src="img/iconos/5ba301a462cc4eb063b1837edbe4ff96.jpg" alt="Fotos"><p>Fotitos</p></div></a>
-      <a href="video.html"><div class="imagen"><img src="img/iconos/video-camera-on-tripod-icon-in-pink-circle-flat-style-vector.jpg" alt="Videos"><p>Videitos</p></div></a>
-      <a href="metas.html"><div class="imagen"><img src="img/iconos/metas.avif" alt="Metas"><p>Metas</p></div></a>
-      <a href="reloj.html"><div class="imagen"><img src="img/iconos/reloj.png" alt="Metas"><p>Tiempito</p></div></a>
-      <a href="beso.html"><div class="imagen"><img src="img/iconos/besos.jpg" alt="Metas"><p>muuuuas</p></div></a>
+      <a href="fotos.html">
+        <div class="imagen">
+          <img src="img/iconos/5ba301a462cc4eb063b1837edbe4ff96.jpg" alt="Fotos">
+          <p>Nuestras Fotitos</p>
+        </div>
+      </a>
+      <a href="video.html">
+        <div class="imagen">
+          <img src="img/iconos/video-camera-on-tripod-icon-in-pink-circle-flat-style-vector.jpg" alt="Videos">
+          <p>Videitos</p>
+        </div>
+      </a>
+      <a href="metas.html">
+        <div class="imagen">
+          <img src="img/iconos/metas.avif" alt="Metas">
+          <p>Nuestros Sueños</p>
+        </div>
+      </a>
+      <a href="reloj.html">
+        <div class="imagen">
+          <img src="img/iconos/reloj.png" alt="Tiempo">
+          <p>Nuestro Tiempo</p>
+        </div>
+      </a>
+      <a href="beso.html">
+        <div class="imagen">
+          <img src="img/iconos/besos.jpg" alt="Besos">
+          <p>Muuuuuas</p>
+        </div>
+      </a>
+      <a href="musica.html">
+        <div class="imagen">
+          <img src="img/iconos/musica.jpg" alt="Música">
+          <p>Nuestra Musiquita</p>
+        </div>
+      </a>
     </div>
   </section>
 
   <!-- Frases románticas -->
   <section class="frases">
-    <h2>te amooo</h2>
+    <h2>Te Amo Porque...</h2>
     <ul>
-      <li>te amooo</li>
-      <li>te amooo</li>
-      <li>te amooo</li>
-      <li>te amooo</li>
+      <li> Me Alegras Todos Los Días</li>
+      <li> Me Haces Reír</li>
+      <li> Me Haces Sentir Amado</li>
+      <li>Eres mi sueño hecho realidad</li>
     </ul>
   </section>
 
-  <!-- Máquina de escribir -->
+  <!-- Mensaje final -->
   <section class="final">
-    <h2 class="typewriter">Te amo más de lo que imaginas ❤️</h2>
+    <div class="typewriter-container">
+      <div class="typewriter" id="typewriter-text">Eres el amor de mi vida ❤️</div>
+    </div>
   </section>
+
+  <script>
+    // Crear partículas de amor
+    function createParticles() {
+      const container = document.getElementById('particles');
+      const particleCount = 15;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Tamaño aleatorio
+        const size = Math.random() * 20 + 10;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Posición inicial aleatoria
+        particle.style.left = `${Math.random() * 100}vw`;
+        
+        // Duración y delay de animación aleatorios
+        const duration = Math.random() * 10 + 10;
+        const delay = Math.random() * 10;
+        particle.style.animationDuration = `${duration}s`;
+        particle.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(particle);
+      }
+    }
+    
+    // Efecto máquina de escribir
+    function typeWriter() {
+      const text = "Eres el amor de mi vida ❤️";
+      const element = document.getElementById('typewriter-text');
+      let i = 0;
+      element.innerHTML = '';
+      
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, 100 + Math.random() * 50);
+        }
+      }
+      
+      // Iniciar después de que aparezca la sección
+      setTimeout(type, 2300);
+    }
+    
+    // Inicializar efectos cuando se cargue la página
+    window.addEventListener('load', () => {
+      createParticles();
+      typeWriter();
+    });
+  </script>
 </body>
 </html>
