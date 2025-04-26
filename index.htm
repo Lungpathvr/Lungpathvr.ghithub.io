@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti, Mi Amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+        
+        .contenedor-principal {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #d23369;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-entrar {
+            background: linear-gradient(to right, #ff6b81, #d23369);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 2rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(210, 51, 105, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-entrar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(210, 51, 105, 0.4);
+        }
+        
+        .btn-entrar:active {
+            transform: translateY(0);
+        }
+        
+        .btn-entrar:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #d23369, #ff6b81);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-entrar:hover:after {
+            opacity: 1;
+        }
+        
+        /* Corazones flotantes */
+        .corazon {
+            position: absolute;
+            pointer-events: none;
+            animation: flotar 6s linear infinite;
+            opacity: 0.7;
+            font-size: 20px;
+            color: #ff6b81;
+        }
+        
+        @keyframes flotar {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-principal">
+        <h1>Bienvenida a Nuestro Mundo</h1>
+        <button class="btn-entrar" onclick="window.location.href='tupagina.html'">Entrar</button>
+    </div>
+
+    <script>
+        // Crear corazones flotantes
+        function crearCorazones() {
+            const body = document.body;
+            const colors = ['#ff6b81', '#d23369', '#ff9e7d'];
+            
+            setInterval(() => {
+                const corazon = document.createElement('div');
+                corazon.className = 'corazon';
+                corazon.innerHTML = '❤';
+                
+                // Posición inicial aleatoria
+                corazon.style.left = Math.random() * 100 + 'vw';
+                corazon.style.top = '100vh';
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 20 + 10;
+                corazon.style.fontSize = size + 'px';
+                
+                // Duración de animación aleatoria
+                const duration = Math.random() * 3 + 3;
+                corazon.style.animationDuration = duration + 's';
+                
+                // Retraso inicial aleatorio
+                corazon.style.animationDelay = Math.random() * 2 + 's';
+                
+                body.appendChild(corazon);
+                
+                // Eliminar el corazón después de la animación
+                setTimeout(() => {
+                    corazon.remove();
+                }, duration * 1000);
+            }, 300);
+        }
+        
+        // Iniciar cuando la página cargue
+        window.onload = crearCorazones;
+    </script>
+</body>
+</html>
