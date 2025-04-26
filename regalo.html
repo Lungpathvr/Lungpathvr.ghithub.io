@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cajita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-oscuro: #d23369;
+            --rosa-claro: #ff6b81;
+            --beige: #fff5f5;
+            --oro: #ffd700;
+            --sombra: rgba(210, 51, 105, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--beige);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 192, 203, 0.1) 0%, transparent 25%);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .particle {
+            position: absolute;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b81"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            z-index: -1;
+            animation: float 15s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--sombra);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--rosa-oscuro);
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(210, 51, 105, 0.2);
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--rosa-claro), transparent);
+        }
+
+        .instructions {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .input-container {
+            position: relative;
+            margin: 30px 0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-field:focus {
+            border-color: var(--rosa-claro);
+            box-shadow: 0 0 0 3px rgba(255, 107, 129, 0.2);
+        }
+
+        .input-field::placeholder {
+            color: #aaa;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--rosa-oscuro), var(--rosa-claro));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 5px 15px var(--sombra);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(210, 51, 105, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            min-height: 60px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .feedback .heart {
+            color: var(--rosa-claro);
+            font-size: 1.5rem;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .gift-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.8s ease-out;
+            margin-top: 20px;
+        }
+
+        .gift-revealed {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(210, 51, 105, 0.2);
+            position: relative;
+        }
+
+        .gift-revealed::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--rosa-oscuro), var(--rosa-claro));
+            border-radius: 15px 15px 0 0;
+        }
+
+        .gift-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--rosa-oscuro);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .gift-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--rosa-claro);
+            opacity: 0;
+            z-index: 1000;
+            animation: confetti-fall 3s ease-in-out;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hint {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #888;
+            font-style: italic;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+                width: 85%;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .instructions {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="particles"></div>
+
+    <div class="container">
+        <h1>cajita</h1>
+        <p class="instructions">
+            Escribe las palabras para descubrir algo especial...
+        </p>
+
+        <div class="input-container">
+            <input type="text" class="input-field" id="secret-code" placeholder="Escribe aquí tu palabra mágica..." autocomplete="off">
+            <button class="submit-btn" id="submit-btn">Descubrir</button>
+        </div>
+
+        <div class="feedback" id="feedback">
+            ¡Cada palabra que escribas me acerca más a tu corazón!
+        </div>
+
+        <div class="hint" id="hint">
+            Pista: te gusta
+        </div>
+
+        <div class="gift-container" id="gift-container">
+            <div class="gift-revealed">
+                <h2 class="gift-title">¡Felicidades mi amor!</h2>
+                <div class="gift-content" id="gift-content">
+                    <!-- El contenido del regalo se insertará aquí dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuración de Firebase (REEMPLAZA CON TUS DATOS)
+        const firebaseConfig = {
+            apiKey: "AIzaSyB4SZ_166kJl99FwImCNxTrDvA_oRo81qg",
+            authDomain: "contadordeamor-9462d.firebaseapp.com",
+            projectId: "contadordeamor-9462d",
+            storageBucket: "contadordeamor-9462d.appspot.com",
+            messagingSenderId: "1046727491357",
+            appId: "1:1046727491357:web:7a15fadf29557077212bf4"
+        };
+
+        // Inicializar Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Configuración del juego
+        const SECRET_WORD = "michiorion";
+        const MAX_ATTEMPTS_BEFORE_HINT = 3;
+        const GIFT_CONTENT = `
+            <p>Has descubierto el código secreto de mi amor 💖</p>
+            <p>dime michiorion muuuuua y te dare una cosita</p>
+            <p style="margin-top: 20px; font-weight: 600; color: var(--rosa-oscuro);">Te amo más de lo que te puedes imaginar</p>
+        `;
+
+        // Elementos del DOM
+        const secretCodeInput = document.getElementById('secret-code');
+        const submitBtn = document.getElementById('submit-btn');
+        const feedback = document.getElementById('feedback');
+        const hint = document.getElementById('hint');
+        const giftContainer = document.getElementById('gift-container');
+        const giftContent = document.getElementById('gift-content');
+        const particlesContainer = document.getElementById('particles');
+
+        // Contador de intentos
+        let attempts = 0;
+
+        // Crear partículas de fondo
+        function createParticles() {
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 20 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 10;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Crear efecto de confeti
+        function createConfetti() {
+            const colors = ['#d23369', '#ff6b81', '#ff8fa3', '#ffb3c1', '#ffffff'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                } else {
+                    confetti.style.borderRadius = '0';
+                }
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+
+        // Guardar intento en Firebase
+        async function saveAttemptToFirebase(word, isCorrect) {
+            try {
+                await db.collection("attempts").add({
+                    word: word,
+                    isCorrect: isCorrect,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userAgent: navigator.userAgent
+                });
+                console.log("Intento guardado en Firebase");
+            } catch (error) {
+                console.error("Error guardando en Firebase: ", error);
+            }
+        }
+
+        // Mostrar el regalo
+        function revealGift() {
+            giftContent.innerHTML = GIFT_CONTENT;
+            giftContainer.style.maxHeight = '500px';
+            createConfetti();
+            feedback.innerHTML = '<span class="heart">❤</span> yupiiiiii Descubriste la palabra <span class="heart">❤</span>';
+            saveAttemptToFirebase(SECRET_WORD, true);
+        }
+
+        // Manejar el envío del código
+        function handleSubmit() {
+            const userInput = secretCodeInput.value.trim().toLowerCase();
+            
+            if (!userInput) {
+                feedback.textContent = "Escribe una palabra mágica para continuar...";
+                return;
+            }
+
+            attempts++;
+            
+            if (userInput === SECRET_WORD) {
+                revealGift();
+            } else {
+                const messages = ["Sigue intentándolo, mi amor..."];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                feedback.innerHTML = `${randomMessage} <span class="heart">❤</span>`;
+                
+                saveAttemptToFirebase(userInput, false);
+                
+                if (attempts >= MAX_ATTEMPTS_BEFORE_HINT) {
+                    hint.style.display = 'block';
+                }
+            }
+            
+            secretCodeInput.value = '';
+        }
+
+        // Event listeners
+        submitBtn.addEventListener('click', handleSubmit);
+        
+        secretCodeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSubmit();
+            }
+        });
+
+        // Inicialización
+        window.addEventListener('load', () => {
+            createParticles();
+            
+            setTimeout(() => {
+                document.querySelector('.container').style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
