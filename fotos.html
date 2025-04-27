@@ -3,204 +3,778 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestros Momentos Mágicos</title>
-    <!-- Fuente cursiva -->
+    <title>Nuestras Fotitos de Amor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/xd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-oscuro: #d23369;
+            --rosa-claro: #ff6b81;
+            --beige: #fff5f7;
+            --sombra: rgba(210, 51, 105, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--beige);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Galería de momentos */
+        .galeria-momentos {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .titulo-galeria {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--rosa-oscuro);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .titulo-galeria span {
+            color: var(--rosa-claro);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .titulo-galeria::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--rosa-claro), transparent);
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: var(--rosa-oscuro);
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* Galería de fotos */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .photo-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--sombra);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(210, 51, 105, 0.3);
+        }
+
+        .photo-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* Cuadrado */
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .photo-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-wrapper:hover .photo-preview {
+            transform: scale(1.05);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(210, 51, 105, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-wrapper:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .zoom-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--rosa-oscuro);
+            transition: all 0.3s ease;
+        }
+
+        .photo-wrapper:hover .zoom-icon {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .photo-info {
+            padding: 15px;
+            background: white;
+        }
+
+        .photo-info h3 {
+            font-size: 1.2rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 5px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .photo-info small {
+            font-size: 0.9rem;
+            color: #888;
+            display: block;
+        }
+
+        /* Lightbox */
+        .photo-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            width: 90%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        #fullscreenPhoto {
+            width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            color: var(--rosa-claro);
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            padding: 0 20px;
+            transition: all 0.3s;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .nav-btn:hover {
+            background: var(--rosa-claro);
+        }
+
+        .prev-btn {
+            left: 30px;
+        }
+
+        .next-btn {
+            right: 30px;
+        }
+
+        /* Filtros */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filtro-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 1px solid var(--rosa-claro);
+            border-radius: 50px;
+            color: var(--rosa-oscuro);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filtro-btn.active, .filtro-btn:hover {
+            background: var(--rosa-claro);
+            color: white;
+        }
+
+        /* Efecto de carga */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--beige);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading .corazon {
+            font-size: 3rem;
+            color: var(--rosa-claro);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Mensaje final */
+        .mensaje-final {
+            text-align: center;
+            margin: 50px 0 30px;
+            padding: 30px;
+            background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-oscuro));
+            color: white;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px var(--sombra);
+        }
+
+        .mensaje-final p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .corazon-flotante {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.5);
+            animation: flotar 5s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .photo-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
+            
+            .titulo-galeria {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .titulo-galeria {
+                font-size: 2.2rem;
+            }
+            
+            .filtros {
+                gap: 10px;
+            }
+            
+            .filtro-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .mensaje-final p {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Pantalla de carga -->
+    <div class="loading" id="loading">
+        <div class="corazon">❤️</div>
+    </div>
+
     <div class="galeria-momentos">
-        <h1 class="titulo-galeria">Nuestras <span>fotitos</span> </h1>
-        <p class="subtitulo">Contigo hasta el fin del mundo <3 </p>
+        <h1 class="titulo-galeria">Nuestras <span>Fotitos</span></h1>
+        <p class="subtitulo">Contigo hasta el fin del mundo &lt;3</p>
         
-        <div class="collage">
-            <!-- Fotos originales -->
-            <div class="foto-container">
-                <img src="img/foto1.jpeg" alt="">
-                <div class="descripcion-foto">
-                    <p></p>
-                    <small>fecha</small>
+        <!-- Filtros -->
+        <div class="filtros">
+            <button class="filtro-btn active" data-filter="all">Todos</button>
+
+            <button class="filtro-btn" data-filter="2024">2024</button>
+            <button class="filtro-btn" data-filter="2025">2025</button>
+            <button class="filtro-btn" data-filter="especiales">Especiales</button>
+        </div>
+        
+        <div class="photo-gallery">
+            <!-- Foto 1 -->
+            <div class="photo-item" data-year="2024" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/foto1.jpeg', 'Nuestro primer momento juntos')">
+                    <img class="photo-preview" src="img/foto1.jpeg" alt="Nuestro primer momento">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>fotito</h3>
+                    <small>de las primera fotos que encontre</small>
                 </div>
             </div>
             
-            <div class="foto-container grande">
-                <img src="img/foto2.jpeg" alt="">
-                <div class="descripcion-foto">
-                    <p>Cumple</p>
-                    <small>12/10/2023</small>
+            <!-- Foto 2 -->
+            <div class="photo-item" data-year="2024" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/foto2.jpeg', 'Celebrando tu cumpleaños')">
+                    <img class="photo-preview" src="img/foto2.jpeg" alt="Celebrando tu cumpleaños">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>CUMPLE</h3>
+                    <small>12/10/2024</small>
                 </div>
             </div>
             
-            <div class="foto-container ancha">
-                <img src="img/foto3.jpeg" alt="">
-                <div class="descripcion-foto">
-                    <p>una fotito ninda</p>
-                    <small>16/09/20023</small>
+            <!-- Foto 3 -->
+            <div class="photo-item" data-year="2023">
+                <div class="photo-wrapper" onclick="openLightbox('img/foto3.jpeg', 'Una foto linda juntos')">
+                    <img class="photo-preview" src="img/foto3.jpeg" alt="Una foto linda">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Una fotito linda</h3>
+                    <small>16/09/2024</small>
                 </div>
             </div>
             
-            <div class="foto-container">
-                <img src="img/foto4.jpeg" alt="">
-                <div class="descripcion-foto">
-                    <p>Cumple</p>
-                    <small>12/10/2023</small>
+            <!-- Foto 4 -->
+            <div class="photo-item" data-year="2024" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/foto4.jpeg', 'Otra celebración de cumpleaños')">
+                    <img class="photo-preview" src="img/foto4.jpeg" alt="Otra celebración">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Un dia Muy Nindo</h3>
+                    <small>12/10/2024</small>
                 </div>
             </div>
 
-            <!-- Nuevas fotos (15-25) -->
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto15.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>24/04/20025</p>
-                    <small></small>
+            <!-- Foto 5 -->
+            <div class="photo-item" data-year="2025" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto15.JPG', 'Un día especial juntos')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto15.JPG" alt="Día especial">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Día especial</h3>
+                    <small>24/04/2025</small>
                 </div>
             </div>
             
-            <div class="foto-container">
-                <img src="img/nuevas fotos/foto16.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>capi pijama</p>
+            <!-- Foto 6 -->
+            <div class="photo-item" data-year="2025">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto16.JPG', 'Día de pijama')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto16.JPG" alt="Día de pijama">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Día de pijama</h3>
                     <small>04/03/2025</small>
                 </div>
             </div>
             
-            <div class="foto-container ancha">
-                <img src="img/nuevas fotos/foto17.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>Cumple</p>
+            <!-- Foto 7 -->
+            <div class="photo-item" data-year="2024" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto17.JPG', 'Celebrando otro cumpleaños')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto17.JPG" alt="Celebrando juntos">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>cumple</h3>
                     <small>29/11/2024</small>
                 </div>
             </div>
             
-            <div class="foto-container">
-                <img src="img/nuevas fotos/foto18.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p></p>
-                    <small>09/12/20024</small>
+            <!-- Foto 8 -->
+            <div class="photo-item" data-year="2024">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto18.JPG', 'Un momento especial')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto18.JPG" alt="Momento especial">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Momento especial</h3>
+                    <small>09/12/2024</small>
                 </div>
             </div>
             
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto19.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p></p>
-                    <small>11/02/20025</small>
+            <!-- Foto 9 -->
+            <div class="photo-item" data-year="2025">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto19.JPG', 'Juntos en casa')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto19.JPG" alt="Juntos en casa">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Nindos</h3>
+                    <small>11/02/2025</small>
                 </div>
             </div>
             
-            <div class="foto-container">
-                <img src="img/nuevas fotos/foto20.jpg" alt="">
-                <div class="descripcion-foto">
-                    <p>mimidos <3 </p>
+            <!-- Foto 10 -->
+            <div class="photo-item" data-year="2025" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto20.jpg', 'Mimidos juntos')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto20.jpg" alt="Mimidos juntos">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Mimidos &lt;3</h3>
                     <small>06/02/2025</small>
                 </div>
             </div>
             
-            <div class="foto-container">
-                <img src="img/nuevas fotos/foto22.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p></p>
-                    <small>11/02/20025</small>
+            <!-- Foto 11 -->
+            <div class="photo-item" data-year="2025">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto22.JPG', 'Otro momento especial')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto22.JPG" alt="Complicidad">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Nindos</h3>
+                    <small>11/02/2025</small>
                 </div>
             </div>
             
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto23.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>nosotros en otro mundo</p>
-                    <small>30/03/20025</small>
+            <!-- Foto 12 -->
+            <div class="photo-item" data-year="2025" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto23.JPG', 'Imaginando otros mundos')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto23.JPG" alt="En otro universo">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>En otro universo</h3>
+                    <small>30/03/2025</small>
                 </div>
             </div>
 
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto21.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>nosotros en otro mundo</p>
-                    <small>30/03/20025</small>
+            <!-- Foto 13 -->
+            <div class="photo-item" data-year="2025" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto21.JPG', 'Explorando mundos imaginarios')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto21.JPG" alt="Explorando juntos">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Otro universo</h3>
+                    <small>30/03/2025</small>
                 </div>
             </div>
 
-
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto26.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>foquitaaaaaa</p>
+            <!-- Foto 14 -->
+            <div class="photo-item" data-year="2025" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto26.JPG', 'Jugando como niños')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto26.JPG" alt="Foquitaaaaaa">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Foquitaaaaaa</h3>
                     <small>22/04/2025</small>
                 </div>
             </div>
 
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto28.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>nosotros michis</p>
-                    <small>15/04/2005</small>
+            <!-- Foto 15 -->
+            <div class="photo-item" data-year="2025" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto28.JPG', 'Nosotros como michis')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto28.JPG" alt="Michis enamorados">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Michis enamorados</h3>
+                    <small>15/04/2025</small>
                 </div>
             </div>
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto29.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>la princes</p>
+            
+            <!-- Foto 16 -->
+            <div class="photo-item" data-year="2024" data-tags="especiales">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto29.JPG', 'Mi princesa')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto29.JPG" alt="La princesa">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>La princesa</h3>
                     <small>29/11/2024</small>
                 </div>
             </div>
-            <div class="foto-container grande">
-                <img src="img/nuevas fotos/foto30.JPG" alt="">
-                <div class="descripcion-foto">
-                    <p>michi orion</p>
+            
+            <!-- Foto 17 -->
+            <div class="photo-item" data-year="2024">
+                <div class="photo-wrapper" onclick="openLightbox('img/nuevas fotos/foto30.JPG', 'Nuestro michi')">
+                    <img class="photo-preview" src="img/nuevas fotos/foto30.JPG" alt="Michi Orion">
+                    <div class="photo-overlay">
+                        <div class="zoom-icon">🔍</div>
+                    </div>
+                </div>
+                <div class="photo-info">
+                    <h3>Michi Orion</h3>
                     <small>09/11/2024</small>
                 </div>
             </div>
-            
-
         </div>
         
+        <!-- Mensaje final -->
         <div class="mensaje-final">
-            <p> eres la persona que más amo en este mundo</p>
+            <div class="corazon-flotante" style="left: 20%; top: 20%;">❤️</div>
+            <div class="corazon-flotante" style="left: 80%; top: 30%; animation-delay: 0.5s;">💖</div>
+            <div class="corazon-flotante" style="left: 40%; top: 10%; animation-delay: 1s;">💕</div>
+            <p>Eres la persona que más amo en este mundo</p>
         </div>
     </div>
 
- <!-- Lightbox (estructura nueva) -->
- <div id="lightbox" class="lightbox">
-    <span class="close-lightbox">&times;</span>
-    <img class="lightbox-img" id="lightbox-image">
-    <div class="lightbox-caption" id="lightbox-caption"></div>
-</div>
+    <!-- Lightbox -->
+    <div id="photoLightbox" class="photo-lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content">
+            <div class="nav-btn prev-btn" onclick="navigate(-1)">&#10094;</div>
+            <img id="fullscreenPhoto" src="" alt="">
+            <div class="nav-btn next-btn" onclick="navigate(1)">&#10095;</div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
 
-<!-- Script para el lightbox (nuevo) -->
-<script>
-    // Abrir lightbox al hacer clic en cualquier imagen
-    document.querySelectorAll('.foto-container img').forEach(img => {
-        img.addEventListener('click', () => {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-image');
-            const caption = document.getElementById('lightbox-caption');
-            
-            lightbox.style.display = 'block';
-            lightboxImg.src = img.src;
-            caption.textContent = img.alt;
+    <script>
+        // Pantalla de carga
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }, 1000);
         });
-    });
 
-    // Cerrar lightbox
-    document.querySelector('.close-lightbox').addEventListener('click', () => {
-        document.getElementById('lightbox').style.display = 'none';
-    });
-
-    // Cerrar al hacer clic fuera de la imagen
-    document.getElementById('lightbox').addEventListener('click', (e) => {
-        if (e.target === document.getElementById('lightbox')) {
-            document.getElementById('lightbox').style.display = 'none';
+        // Variables para el lightbox
+        let currentPhotoIndex = 0;
+        const photos = Array.from(document.querySelectorAll('.photo-wrapper'));
+        const photoItems = Array.from(document.querySelectorAll('.photo-item'));
+        
+        // Abrir lightbox
+        function openLightbox(photoSrc, caption) {
+            const lightbox = document.getElementById('photoLightbox');
+            const photo = document.getElementById('fullscreenPhoto');
+            const captionElement = document.getElementById('lightboxCaption');
+            
+            // Encontrar el índice de la foto clickeada
+            currentPhotoIndex = photos.findIndex(item => 
+                item.getAttribute('onclick').includes(photoSrc));
+            
+            photo.src = photoSrc;
+            captionElement.textContent = caption || '';
+            lightbox.classList.add('active');
+            
+            // Bloquear scroll del body
+            document.body.style.overflow = 'hidden';
         }
-    });
 
-    // Cerrar con tecla ESC
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            document.getElementById('lightbox').style.display = 'none';
+        function closeLightbox() {
+            const lightbox = document.getElementById('photoLightbox');
+            lightbox.classList.remove('active');
+            
+            // Restaurar scroll del body
+            document.body.style.overflow = 'auto';
         }
-    });
-</script>
+
+        // Navegación entre fotos
+        function navigate(direction) {
+            currentPhotoIndex += direction;
+            
+            if (currentPhotoIndex >= photos.length) {
+                currentPhotoIndex = 0;
+            } else if (currentPhotoIndex < 0) {
+                currentPhotoIndex = photos.length - 1;
+            }
+            
+            const photo = document.getElementById('fullscreenPhoto');
+            const captionElement = document.getElementById('lightboxCaption');
+            
+            // Obtener el onclick del elemento actual
+            const onclickAttr = photos[currentPhotoIndex].getAttribute('onclick');
+            // Extraer la ruta de la foto y el caption
+            const matches = onclickAttr.match(/openLightbox\('(.*?)', '(.*?)'\)/);
+            
+            if (matches && matches.length >= 3) {
+                photo.src = matches[1];
+                captionElement.textContent = matches[2] || '';
+            }
+        }
+
+        // Cerrar lightbox al hacer clic fuera de la foto
+        document.getElementById('photoLightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            const lightbox = document.getElementById('photoLightbox');
+            
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    navigate(-1);
+                } else if (e.key === 'ArrowRight') {
+                    navigate(1);
+                }
+            }
+        });
+
+        // Filtros
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Quitar active de todos los botones
+                document.querySelectorAll('.filtro-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Añadir active al botón clickeado
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                filterPhotos(filter);
+            });
+        });
+
+        function filterPhotos(filter) {
+            photoItems.forEach(item => {
+                const year = item.getAttribute('data-year');
+                const tags = item.getAttribute('data-tags');
+                
+                if (filter === 'all' || 
+                    filter === year || 
+                    (tags && tags.includes(filter))) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
