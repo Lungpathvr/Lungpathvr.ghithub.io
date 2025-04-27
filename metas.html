@@ -6,12 +6,314 @@
     <title>Nuestras Metitas de Amor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/xd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --rosa-oscuro: #d23369;
+            --rosa-claro: #ff6b81;
+            --rosa-pastel: #ffb8c6;
+            --beige: #fff5f7;
+            --dorado: #ffd700;
+            --sombra: rgba(210, 51, 105, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--beige);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url('https://transparenttextures.com/patterns/light-paper-fibers.png');
+        }
+
+        /* Lluvia de corazones */
+        #lluviaCorazones {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .corazon-lluvia {
+            position: absolute;
+            color: var(--rosa-claro);
+            opacity: 0.7;
+            animation: caer linear infinite;
+            user-select: none;
+            z-index: 0;
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px var(--sombra);
+        }
+
+        header h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInDown 1s;
+        }
+
+        header p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            color: var(--rosa-oscuro);
+            opacity: 0.9;
+            animation: fadeIn 1.5s;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Metas container */
+        .metas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Categorías de metas */
+        .meta-categoria {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 20px var(--sombra);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .meta-categoria:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(210, 51, 105, 0.3);
+        }
+
+        .meta-categoria::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--rosa-claro), var(--rosa-oscuro));
+        }
+
+        .meta-categoria h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .meta-categoria h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--rosa-claro), transparent);
+        }
+
+        .meta-categoria h2 span {
+            color: var(--dorado);
+            font-size: 1.5em;
+            vertical-align: middle;
+        }
+
+        .meta-categoria h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            margin: 20px 0 15px;
+            text-align: center;
+        }
+
+        /* Items de metas */
+        .meta-item {
+            background: rgba(255, 182, 193, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid var(--rosa-claro);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+        }
+
+        .meta-item:hover {
+            background: rgba(255, 182, 193, 0.2);
+            transform: translateX(5px);
+            box-shadow: 5px 5px 10px rgba(210, 51, 105, 0.1);
+        }
+
+        .meta-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.5s ease;
+        }
+
+        .meta-item:hover::before {
+            transform: translateX(100%);
+        }
+
+        .meta-item span {
+            float: right;
+            font-size: 1.2em;
+            margin-left: 10px;
+            color: var(--rosa-oscuro);
+            transition: transform 0.3s ease;
+        }
+
+        .meta-item:hover span {
+            transform: scale(1.2);
+        }
+
+        /* Colores por categoría */
+        .corto-plazo {
+            border-top: 5px solid #ff9e7d;
+        }
+
+        .mediano-plazo {
+            border-top: 5px solid #ff6b81;
+        }
+
+        .largo-plazo {
+            border-top: 5px solid #d23369;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-oscuro));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .corazon {
+            color: white;
+            animation: pulse 1.5s infinite;
+            display: inline-block;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Efectos especiales */
+        .estrella {
+            position: absolute;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            animation: brillar 3s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        @keyframes brillar {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            header p {
+                font-size: 1.4rem;
+            }
+            
+            .metas-container {
+                grid-template-columns: 1fr;
+            }
+            
+            footer p {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .meta-categoria h2 {
+                font-size: 1.8rem;
+            }
+            
+            .meta-item {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Lluvia de corazones (generada por JS) -->
     <div id="lluviaCorazones"></div>
+    
+    <!-- Estrellas decorativas -->
+    <div id="estrellas"></div>
     
     <header>
         <h1>Nuestras Metitas de Amor</h1>
@@ -77,7 +379,7 @@
     <script>
         // Crear lluvia de corazones
         function crearLluvia() {
-            const corazones = ['❤️'];
+            const corazones = ['❤️', '💖', '💕', '💗', '💓', '💘'];
             const lluviaContainer = document.getElementById('lluviaCorazones');
             
             // Crear 50 corazones iniciales
@@ -107,6 +409,9 @@
                 // Retraso inicial aleatorio
                 corazon.style.animationDelay = Math.random() * 5 + 's';
                 
+                // Opacidad aleatoria
+                corazon.style.opacity = Math.random() * 0.5 + 0.3;
+                
                 lluviaContainer.appendChild(corazon);
                 
                 // Eliminar el corazón después de que termine la animación
@@ -116,8 +421,71 @@
             }
         }
         
+        // Crear estrellas decorativas
+        function crearEstrellas() {
+            const estrellasContainer = document.getElementById('estrellas');
+            const colores = ['#ffd700', '#ff9e7d', '#ff6b81', '#d23369', '#ffffff'];
+            
+            for (let i = 0; i < 20; i++) {
+                const estrella = document.createElement('div');
+                estrella.className = 'estrella';
+                estrella.innerHTML = '✦';
+                
+                // Posición aleatoria
+                estrella.style.left = Math.random() * 100 + 'vw';
+                estrella.style.top = Math.random() * 100 + 'vh';
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 20 + 10;
+                estrella.style.fontSize = size + 'px';
+                
+                // Color aleatorio
+                estrella.style.color = colores[Math.floor(Math.random() * colores.length)];
+                
+                // Animación única
+                estrella.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                estrella.style.animationDelay = (Math.random() * 5) + 's';
+                
+                estrellasContainer.appendChild(estrella);
+            }
+        }
+        
+        // Efecto al pasar el mouse sobre los items
+        function efectosItems() {
+            const items = document.querySelectorAll('.meta-item');
+            
+            items.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const emoji = item.querySelector('span');
+                    if (emoji) {
+                        emoji.style.transform = 'scale(1.5) rotate(10deg)';
+                    }
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    const emoji = item.querySelector('span');
+                    if (emoji) {
+                        emoji.style.transform = 'scale(1) rotate(0deg)';
+                    }
+                });
+            });
+        }
+        
         // Iniciar cuando la página cargue
-        window.onload = crearLluvia;
+        window.onload = function() {
+            crearLluvia();
+            crearEstrellas();
+            efectosItems();
+            
+            // Animación de entrada para las categorías
+            const categorias = document.querySelectorAll('.meta-categoria');
+            categorias.forEach((cat, index) => {
+                setTimeout(() => {
+                    cat.style.animation = 'fadeInUp 0.5s ease-out forwards';
+                    cat.style.opacity = '0';
+                }, index * 100);
+            });
+        };
     </script>
 </body>
 </html>
