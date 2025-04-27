@@ -478,6 +478,9 @@
                     document.getElementById('loading').style.display = 'none';
                 }, 500);
             }, 1000);
+            
+            // Precargar videos para vista previa
+            initializeVideoPreviews();
         });
 
         // Lightbox
@@ -545,17 +548,25 @@
             });
         }
 
-        // Precarga de videos para el hover
-        document.querySelectorAll('.video-preview').forEach(video => {
-            video.addEventListener('mouseover', function() {
-                this.play();
+        // Inicializar vista previa de videos
+        function initializeVideoPreviews() {
+            document.querySelectorAll('.video-preview').forEach(video => {
+                // Configurar eventos para reproducción automática al hacer hover
+                const videoWrapper = video.closest('.video-wrapper');
+                
+                videoWrapper.addEventListener('mouseenter', function() {
+                    video.play().catch(e => console.log("No se pudo reproducir automáticamente:", e));
+                });
+                
+                videoWrapper.addEventListener('mouseleave', function() {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+                
+                // Precargar el video para vista previa
+                video.load();
             });
-            
-            video.addEventListener('mouseout', function() {
-                this.pause();
-                this.currentTime = 0;
-            });
-        });
+        }
     </script>
 </body>
 </html>
