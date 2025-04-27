@@ -4,76 +4,314 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contador de Amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #fff5f5;
-            text-align: center;
-            padding: 20px;
+        :root {
+            --rosa-oscuro: #d23369;
+            --rosa-claro: #ff6b81;
+            --rosa-pastel: #ffb8c6;
+            --beige: #fff5f7;
+            --dorado: #ffd700;
+            --sombra: rgba(210, 51, 105, 0.2);
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--beige);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://transparenttextures.com/patterns/light-paper-fibers.png');
+        }
+
+        /* Lluvia de corazones */
+        #lluviaCorazones {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .corazon-lluvia {
+            position: absolute;
+            color: var(--rosa-claro);
+            opacity: 0.7;
+            animation: caer linear infinite;
+            user-select: none;
+            z-index: 0;
+        }
+
+        @keyframes caer {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container */
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
+
+        /* Header */
         h1 {
-            color: #d23369;
-            margin-bottom: 30px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 40px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            display: inline-block;
+            align-self: center;
         }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--rosa-claro), transparent);
+            border-radius: 3px;
+        }
+
+        /* Contadores */
         .contadores {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
+            gap: 40px;
+            margin-bottom: 40px;
         }
+
         .contador {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
-            width: 300px;
-            box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 10px 30px var(--sombra);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contador:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(210, 51, 105, 0.3);
+        }
+
+        .contador::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--rosa-claro), var(--rosa-oscuro));
+        }
+
+        .contador h2 {
+            font-size: 1.5rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 3rem;
+            margin: 15px 0;
+            text-align: center;
             transition: transform 0.3s ease;
         }
-        .contador:hover {
-            transform: translateY(-5px);
-        }
+
         .numero {
-            font-size: 3.5rem;
-            color: #d23369;
-            margin: 15px 0;
+            font-size: 4.5rem;
+            color: var(--rosa-oscuro);
+            margin: 20px 0;
             font-weight: bold;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
         }
+
+        .pulse {
+            animation: pulse 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Botones */
+        .boton-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
         .boton {
-            background: #ff6b81;
+            background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-oscuro));
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 15px 35px;
             border-radius: 50px;
             font-size: 1.2rem;
-            margin: 10px;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(210, 51, 105, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
+
         .boton:hover {
-            background: #d23369;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(210, 51, 105, 0.4);
         }
-        .emoji {
-            font-size: 2rem;
+
+        .boton:active {
+            transform: translateY(1px);
         }
+
+        .boton::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: translateX(-100%) rotate(45deg);
+            transition: transform 0.5s ease;
+        }
+
+        .boton:hover::after {
+            transform: translateX(100%) rotate(45deg);
+        }
+
+        .clicked {
+            animation: clickEffect 0.3s ease;
+        }
+
+        @keyframes clickEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        /* Footer */
         footer {
-            margin-top: 40px;
-            color: #888;
-            font-size: 0.9rem;
+            text-align: center;
+            padding: 30px;
+            margin-top: auto;
+            background: linear-gradient(135deg, var(--rosa-claro), var(--rosa-oscuro));
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
-        @media (max-width: 600px) {
+
+        footer p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Efectos especiales */
+        .corazon-flotante {
+            position: absolute;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            animation: flotar 5s infinite ease-in-out;
+            z-index: 1;
+        }
+
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .contador {
+                width: 300px;
+                padding: 25px;
+            }
+            
+            .numero {
+                font-size: 3.5rem;
+            }
+            
+            footer p {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
             .contadores {
-                flex-direction: column;
-                align-items: center;
+                gap: 20px;
+            }
+            
+            .contador {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .numero {
+                font-size: 3rem;
+            }
+            
+            .boton {
+                padding: 12px 25px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Lluvia de corazones (generada por JS) -->
+    <div id="lluviaCorazones"></div>
+    
     <div class="container">
         <h1>besitos y abracitos a distancia ❤️</h1>
         
@@ -82,28 +320,34 @@
                 <h2>Besos recibidos</h2>
                 <div class="emoji">💋</div>
                 <div class="numero" id="contador-besos">0</div>
-                <button class="boton" id="btn-beso">Enviar Beso</button>
+                <div class="boton-container">
+                    <button class="boton" id="btn-beso">Enviar Besito</button>
+                </div>
             </div>
             
             <div class="contador">
                 <h2>Abrazos recibidos</h2>
                 <div class="emoji">🤗</div>
                 <div class="numero" id="contador-abrazos">0</div>
-                <button class="boton" id="btn-abrazo">Enviar Abrazo</button>
+                <div class="boton-container">
+                    <button class="boton" id="btn-abrazo">Enviar Abracito</button>
+                </div>
             </div>
         </div>
-        
-        <footer>
-            ni la distancia nos separara ❤️
-        </footer>
     </div>
+    
+    <footer>
+        <div class="corazon-flotante" style="left: 20%; top: 30%;">❤️</div>
+        <div class="corazon-flotante" style="left: 80%; top: 20%; animation-delay: 0.5s;">💖</div>
+        <p>ni la distancia nos separara ❤️</p>
+    </footer>
 
     <!-- SDKs de Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 
     <script>
-        // Configuración de Firebase (ya incluiste la tuya)
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyB4SZ_166kJl99FwImCNxTrDvA_oRo81qg",
             authDomain: "contadordeamor-9462d.firebaseapp.com",
@@ -135,51 +379,145 @@
         contadorRef.onSnapshot((doc) => {
             if (doc.exists) {
                 const data = doc.data();
-                document.getElementById('contador-besos').textContent = data.besos || 0;
-                document.getElementById('contador-abrazos').textContent = data.abrazos || 0;
+                const besosElement = document.getElementById('contador-besos');
+                const abrazosElement = document.getElementById('contador-abrazos');
                 
-                // Efecto visual al actualizar
-                if (data.besos > parseInt(document.getElementById('contador-besos').textContent)) {
-                    document.getElementById('contador-besos').classList.add('pulse');
+                // Actualizar siempre los valores
+                besosElement.textContent = data.besos || 0;
+                abrazosElement.textContent = data.abrazos || 0;
+                
+                // Solo animar si el número aumenta
+                if (data.besos > parseInt(besosElement.dataset.lastValue || 0)) {
+                    besosElement.classList.add('pulse');
                     setTimeout(() => {
-                        document.getElementById('contador-besos').classList.remove('pulse');
+                        besosElement.classList.remove('pulse');
                     }, 500);
+                    crearEfectoCorazon('💋', 'contador-besos');
                 }
                 
-                if (data.abrazos > parseInt(document.getElementById('contador-abrazos').textContent)) {
-                    document.getElementById('contador-abrazos').classList.add('pulse');
+                if (data.abrazos > parseInt(abrazosElement.dataset.lastValue || 0)) {
+                    abrazosElement.classList.add('pulse');
                     setTimeout(() => {
-                        document.getElementById('contador-abrazos').classList.remove('pulse');
+                        abrazosElement.classList.remove('pulse');
                     }, 500);
+                    crearEfectoCorazon('🤗', 'contador-abrazos');
                 }
+                
+                // Guardar el último valor para comparaciones futuras
+                besosElement.dataset.lastValue = data.besos || 0;
+                abrazosElement.dataset.lastValue = data.abrazos || 0;
             }
         });
+
+        // Función para crear efecto de emoji flotante
+        function crearEfectoCorazon(emoji, contadorId) {
+            const contador = document.getElementById(contadorId);
+            const corazon = document.createElement('div');
+            corazon.textContent = emoji;
+            corazon.style.position = 'absolute';
+            corazon.style.fontSize = '2rem';
+            corazon.style.animation = 'flotarCorazon 2s ease-out forwards';
+            corazon.style.zIndex = '10';
+            corazon.style.pointerEvents = 'none';
+            
+            // Posicionar cerca del contador
+            const rect = contador.getBoundingClientRect();
+            corazon.style.left = (rect.left + rect.width/2 - 15) + 'px';
+            corazon.style.top = (rect.top - 30) + 'px';
+            
+            document.body.appendChild(corazon);
+            
+            // Eliminar después de la animación
+            setTimeout(() => {
+                corazon.remove();
+            }, 2000);
+        }
 
         // Función para enviar besos o abrazos con animación
         function enviarAmor(tipo) {
             // Animación del botón
             const boton = tipo === 'besos' ? document.getElementById('btn-beso') : document.getElementById('btn-abrazo');
             boton.classList.add('clicked');
-            setTimeout(() => {
-                boton.classList.remove('clicked');
-            }, 300);
+            
+            // Crear efecto visual
+            const emoji = tipo === 'besos' ? '💋' : '🤗';
+            crearEfectoCorazon(emoji, `contador-${tipo}`);
             
             // Actualizar Firestore
             contadorRef.update({
                 [tipo]: firebase.firestore.FieldValue.increment(1)
             }).catch(error => {
                 console.error("Error al actualizar: ", error);
-                alert("Ocurrió un error al enviar tu " + (tipo === 'besos' ? 'beso' : 'abrazo'));
+                alert("Ocurrió un error al enviar tu " + (tipo === 'besos' ? 'besito' : 'abracito'));
             });
+            
+            setTimeout(() => {
+                boton.classList.remove('clicked');
+            }, 300);
+        }
+
+        // Crear lluvia de corazones
+        function crearLluvia() {
+            const corazones = ['❤️', '💖', '💕', '💗', '💓', '💘'];
+            const lluviaContainer = document.getElementById('lluviaCorazones');
+            
+            // Crear 50 corazones iniciales
+            for (let i = 0; i < 50; i++) {
+                crearCorazon();
+            }
+            
+            // Crear nuevos corazones cada cierto tiempo
+            setInterval(crearCorazon, 300);
+            
+            function crearCorazon() {
+                const corazon = document.createElement('div');
+                corazon.className = 'corazon-lluvia';
+                corazon.innerHTML = corazones[Math.floor(Math.random() * corazones.length)];
+                
+                // Posición aleatoria
+                corazon.style.left = Math.random() * 100 + 'vw';
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 20 + 10;
+                corazon.style.fontSize = size + 'px';
+                
+                // Duración de animación aleatoria
+                const duration = Math.random() * 5 + 5;
+                corazon.style.animationDuration = duration + 's';
+                
+                // Retraso inicial aleatorio
+                corazon.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Opacidad aleatoria
+                corazon.style.opacity = Math.random() * 0.5 + 0.3;
+                
+                lluviaContainer.appendChild(corazon);
+                
+                // Eliminar el corazón después de que termine la animación
+                setTimeout(() => {
+                    corazon.remove();
+                }, duration * 1000);
+            }
         }
 
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', () => {
             inicializarContadores();
+            crearLluvia();
             
             // Event listeners para los botones
             document.getElementById('btn-beso').addEventListener('click', () => enviarAmor('besos'));
             document.getElementById('btn-abrazo').addEventListener('click', () => enviarAmor('abrazos'));
+            
+            // Definir animación para los emojis flotantes
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes flotarCorazon {
+                    0% { transform: translateY(0) scale(1); opacity: 1; }
+                    100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
