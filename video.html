@@ -3,22 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestros Videitos</title>
+    <title>Nuestros Videitos de Amor</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/xd.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-oscuro: #d23369;
+            --rosa-claro: #ff6b81;
+            --beige: #fff5f7;
+            --sombra: rgba(210, 51, 105, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--beige);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Galería de momentos */
+        .galeria-momentos {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .titulo-galeria {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--rosa-oscuro);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .titulo-galeria span {
+            color: var(--rosa-claro);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .titulo-galeria::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--rosa-claro), transparent);
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: var(--rosa-oscuro);
+            margin-bottom: 40px;
+            font-size: 1.2rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        /* Galería de videos */
+        .video-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 20px 0;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--sombra);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .video-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(210, 51, 105, 0.3);
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .video-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .video-wrapper:hover .video-preview {
+            transform: scale(1.05);
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(210, 51, 105, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-wrapper:hover .video-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--rosa-oscuro);
+            transition: all 0.3s ease;
+        }
+
+        .video-wrapper:hover .play-icon {
+            transform: scale(1.1);
+            background: white;
+        }
+
+        .video-info {
+            padding: 15px;
+            background: white;
+        }
+
+        .video-info h3 {
+            font-size: 1.2rem;
+            color: var(--rosa-oscuro);
+            margin-bottom: 5px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .video-info small {
+            font-size: 0.9rem;
+            color: #888;
+            display: block;
+        }
+
+        /* Lightbox */
+        .video-lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            width: 90%;
+            max-width: 900px;
+            position: relative;
+        }
+
+        #fullscreenVideo {
+            width: 100%;
+            max-height: 80vh;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+        }
+
+        .close-btn:hover {
+            color: var(--rosa-claro);
+        }
+
+        /* Filtros */
+        .filtros {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filtro-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 1px solid var(--rosa-claro);
+            border-radius: 50px;
+            color: var(--rosa-oscuro);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filtro-btn.active, .filtro-btn:hover {
+            background: var(--rosa-claro);
+            color: white;
+        }
+
+        /* Efecto de carga */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--beige);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading .corazon {
+            font-size: 3rem;
+            color: var(--rosa-claro);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .video-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
+            
+            .titulo-galeria {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .video-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .titulo-galeria {
+                font-size: 2.2rem;
+            }
+            
+            .filtros {
+                gap: 10px;
+            }
+            
+            .filtro-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Pantalla de carga -->
+    <div class="loading" id="loading">
+        <div class="corazon">❤️</div>
+    </div>
+
     <div class="galeria-momentos">
         <h1 class="titulo-galeria">Nuestros <span>Videitos</span></h1>
-        <p class="subtitulo">nuestra historia en videitos amur</p>
+        <p class="subtitulo">Nuestra historia en momentos especiales</p>
+        
+        <!-- Filtros -->
+        <div class="filtros">
+            <button class="filtro-btn active" data-filter="all">Todos</button>
+            <button class="filtro-btn" data-filter="2024">2024</button>
+            <button class="filtro-btn" data-filter="2025">2025</button>
+            <button class="filtro-btn" data-filter="besos">Nindos</button>
+
+        </div>
         
         <div class="video-gallery">
-            <!-- Video 1 - Ejemplo -->
-            <div class="video-item">
+            <!-- Video 1 -->
+            <div class="video-item" data-year="2024" data-tags="besos">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video1.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video1.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -26,15 +340,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3>muuuuuuuuua</h3>
-                    <small>25/04/2025</small>
+                    <h3>Muuuuuuuuua</h3>
+                    <small>25/04/2024</small>
                 </div>
             </div>
             
-            <!-- Video 2 - Ejemplo -->
-            <div class="video-item">
+            <!-- Video 2 -->
+            <div class="video-item" data-year="2024" data-tags="mimos">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video2.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video2.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -42,13 +356,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3>mimiditos</h3>
-                    <small>6/02/2024</small>
+                    <h3>Mimiditos</h3>
+                    <small>06/02/2024</small>
                 </div>
             </div>
-            <div class="video-item">
+            
+            <!-- Video 3 -->
+            <div class="video-item" data-year="2025" data-tags="viajes">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video3.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video3.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -56,13 +372,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3></h3>
-                    <small>11/02/20025</small>
+                    <h3>un bonito videito</h3>
+                    <small>11/02/2025</small>
                 </div>
             </div>
-            <div class="video-item">
+            
+            <!-- Video 4 -->
+            <div class="video-item" data-year="2024" data-tags="mimos">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video4.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video4.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -70,13 +388,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3>mimiditos</h3>
-                    <small>6/Frebrero/2024</small>
+                    <h3>video chistoso  </h3>
+                    <small>06/02/2024</small>
                 </div>
             </div>
-            <div class="video-item">
+            
+            <!-- Video 5 -->
+            <div class="video-item" data-year="2025" data-tags="besos">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video5.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video5.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -84,13 +404,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3></h3>
+                    <h3>meeeeee</h3>
                     <small>03/02/2025</small>
                 </div>
             </div>
-            <div class="video-item">
+            
+            <!-- Video 6 -->
+            <div class="video-item" data-year="2025" data-tags="viajes">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video6.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video6.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -98,13 +420,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3></h3>
+                    <h3>Aniversario</h3>
                     <small>09/12/2025</small>
                 </div>
             </div>
-            <div class="video-item">
+            
+            <!-- Video 7 -->
+            <div class="video-item" data-year="2025" data-tags="besos">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video7.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video7.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -112,13 +436,15 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3></h3>
+                    <h3>Te amo</h3>
                     <small>16/02/2025</small>
                 </div>
             </div>
-            <div class="video-item">
+            
+            <!-- Video 8 -->
+            <div class="video-item" data-year="2025" data-tags="besos">
                 <div class="video-wrapper" onclick="openLightbox('img/videos/video8.MP4')">
-                    <video class="video-preview" muted loop autoplay playsinline>
+                    <video class="video-preview" muted loop playsinline>
                         <source src="img/videos/video8.MP4" type="video/mp4">
                     </video>
                     <div class="video-overlay">
@@ -126,12 +452,10 @@
                     </div>
                 </div>
                 <div class="video-info">
-                    <h3>te amo</h3>
+                    <h3>videito nindo</h3>
                     <small>09/02/2025</small>
                 </div>
             </div>
-            
-
         </div>
     </div>
 
@@ -145,6 +469,93 @@
         </div>
     </div>
 
-    <script src="js/videos.js"></script>
+    <script>
+        // Pantalla de carga
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }, 1000);
+        });
+
+        // Lightbox
+        function openLightbox(videoSrc) {
+            const lightbox = document.getElementById('videoLightbox');
+            const video = document.getElementById('fullscreenVideo');
+            
+            video.src = videoSrc;
+            lightbox.classList.add('active');
+            video.play();
+            
+            // Bloquear scroll del body
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('videoLightbox');
+            const video = document.getElementById('fullscreenVideo');
+            
+            video.pause();
+            video.currentTime = 0;
+            lightbox.classList.remove('active');
+            
+            // Restaurar scroll del body
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar lightbox al hacer clic fuera del video
+        document.getElementById('videoLightbox').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+
+        // Filtros
+        document.querySelectorAll('.filtro-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Quitar active de todos los botones
+                document.querySelectorAll('.filtro-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Añadir active al botón clickeado
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                filterVideos(filter);
+            });
+        });
+
+        function filterVideos(filter) {
+            const videos = document.querySelectorAll('.video-item');
+            
+            videos.forEach(video => {
+                const year = video.getAttribute('data-year');
+                const tags = video.getAttribute('data-tags');
+                
+                if (filter === 'all' || 
+                    filter === year || 
+                    (tags && tags.includes(filter))) {
+                    video.style.display = 'block';
+                } else {
+                    video.style.display = 'none';
+                }
+            });
+        }
+
+        // Precarga de videos para el hover
+        document.querySelectorAll('.video-preview').forEach(video => {
+            video.addEventListener('mouseover', function() {
+                this.play();
+            });
+            
+            video.addEventListener('mouseout', function() {
+                this.pause();
+                this.currentTime = 0;
+            });
+        });
+    </script>
 </body>
 </html>
