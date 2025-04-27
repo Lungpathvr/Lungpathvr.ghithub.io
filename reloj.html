@@ -4,131 +4,452 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestro Tiempo Juntos ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --rosa-oscuro: #d23369;
+            --rosa-claro: #ff6b81;
+            --beige: #fff5f7;
+            --oro: #ffd700;
+            --sombra: rgba(210, 51, 105, 0.3);
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #fff5f7;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            background: linear-gradient(135deg, #fff5f7 0%, #ffeef2 100%);
+            color: #333;
+            min-height: 100vh;
             text-align: center;
-            background-image: url('https://i.pinimg.com/originals/8d/1a/3d/8d1a3d5f8e7e6a2e5a8f3a2e5a8f3a2e.png');
-            background-attachment: fixed;
-            background-size: cover;
+            overflow-x: hidden;
+            position: relative;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 182, 193, 0.2) 0%, transparent 25%),
+                radial-gradient(circle at 80% 70%, rgba(255, 192, 203, 0.2) 0%, transparent 25%);
         }
-        
+
+        /* Efecto de partículas de amor */
+        .particle {
+            position: absolute;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b81"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0;
+            z-index: -1;
+            animation: float 15s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(360deg) scale(1);
+                opacity: 0;
+            }
+        }
+
         .seccion {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(210, 51, 105, 0.2);
-            padding: 30px;
-            margin: 30px auto;
-            max-width: 600px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 107, 129, 0.3);
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--sombra);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 1s forwards 0.5s;
         }
-        
+
+        @keyframes fadeInUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         h1, h2 {
-            color: #d23369;
+            color: var(--rosa-oscuro);
             font-family: 'Dancing Script', cursive;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            text-shadow: 2px 2px 4px rgba(210, 51, 105, 0.2);
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
         }
-        
+
+        h1 {
+            font-size: 3.5rem;
+            margin-top: 0;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--rosa-claro), transparent);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+        }
+
+        /* Contador de tiempo mejor organizado */
         #contador-relacion {
-            font-size: 1.5rem;
-            color: #ff6b81;
-            margin: 25px 0;
-            font-weight: bold;
             display: flex;
             justify-content: center;
-            gap: 10px;
             flex-wrap: wrap;
+            gap: 15px;
+            margin: 40px 0;
         }
-        
+
+        .grupo-tiempo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+
         .tiempo-box {
-            background: rgba(255, 182, 193, 0.3);
-            border-radius: 10px;
-            padding: 8px 12px;
-            min-width: 70px;
+            background: rgba(255, 182, 193, 0.15);
+            border-radius: 15px;
+            padding: 20px 15px;
+            min-width: 80px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(210, 51, 105, 0.1);
+            margin-bottom: 5px;
         }
-        
-        .tiempo-box span {
-            font-size: 1rem;
+
+        .tiempo-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(210, 51, 105, 0.2);
+            background: rgba(255, 182, 193, 0.25);
+        }
+
+        .tiempo-box span:first-child {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--rosa-oscuro);
             display: block;
-            color: #d23369;
+            margin-bottom: 5px;
+            font-family: 'Poppins', sans-serif;
         }
-        
+
+        .tiempo-box span:last-child {
+            font-size: 1rem;
+            color: var(--rosa-oscuro);
+            opacity: 0.8;
+        }
+
+        .separador {
+            font-size: 2rem;
+            color: var(--rosa-claro);
+            align-self: center;
+            margin: 0 5px;
+        }
+
+        #dias-totales {
+            font-size: 1.3rem;
+            color: var(--rosa-oscuro);
+            margin: 30px 0;
+            font-weight: 500;
+        }
+
+        #proximo-aniversario {
+            font-size: 1.2rem;
+            color: var(--rosa-oscuro);
+            background: rgba(255, 182, 193, 0.2);
+            padding: 12px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        /* Calendario interactivo */
+        .calendario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendario-title {
+            font-size: 1.5rem;
+            color: var(--rosa-oscuro);
+            font-weight: 600;
+        }
+
+        .calendario-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .calendario-btn {
+            background: var(--rosa-claro);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calendario-btn:hover {
+            background: var(--rosa-oscuro);
+            transform: scale(1.1);
+        }
+
         .mes {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 8px;
-            margin-top: 15px;
         }
-        
+
+        .dia-header {
+            font-weight: bold;
+            color: var(--rosa-oscuro);
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .dia {
+            padding: 12px 0;
+            border-radius: 50%;
+            background: rgba(248, 248, 248, 0.7);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dia:hover {
+            transform: scale(1.1);
+        }
+
         .dia.aniversario {
-            background: #ff6b81;
+            background: var(--rosa-claro);
             color: white;
             font-weight: bold;
-            transform: scale(1.1);
-            box-shadow: 0 3px 10px rgba(210, 51, 105, 0.3);
             animation: pulse 2s infinite;
+            box-shadow: 0 5px 15px var(--sombra);
         }
-        
+
+        .dia.aniversario::after {
+            content: '❤️';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 1rem;
+        }
+
+        .dia.hoy {
+            border: 2px solid var(--rosa-oscuro);
+            background: rgba(255, 255, 255, 0.9);
+            font-weight: bold;
+            transform: scale(1.1);
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
-        .dia.aniversario::after {
-            content: '❤️';
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: 1.2rem;
+
+        .fecha-inicio {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: var(--rosa-oscuro);
+            opacity: 0.8;
+        }
+
+        /* Efecto de confeti */
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            background-color: var(--rosa-claro);
+            opacity: 0;
+            z-index: 1000;
+            animation: confetti-fall 3s ease-in-out;
+            border-radius: 50%;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .seccion {
+                padding: 30px 20px;
+                margin: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            #contador-relacion {
+                gap: 10px;
+            }
+            
+            .tiempo-box {
+                padding: 15px 10px;
+                min-width: 70px;
+            }
+            
+            .tiempo-box span:first-child {
+                font-size: 1.8rem;
+            }
+            
+            .separador {
+                font-size: 1.5rem;
+            }
+            
+            .mes {
+                gap: 5px;
+            }
+            
+            .dia {
+                padding: 8px 0;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grupo-tiempo {
+                margin: 0 5px;
+            }
+            
+            .tiempo-box {
+                padding: 12px 8px;
+                min-width: 60px;
+            }
+            
+            .tiempo-box span:first-child {
+                font-size: 1.5rem;
+            }
+            
+            .mes {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 3px;
+            }
+            
+            .dia {
+                padding: 6px 0;
+                font-size: 0.8rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Reloj de relación con minutos y segundos -->
+    <!-- Efecto de partículas -->
+    <div id="particles"></div>
+
+    <!-- Reloj de relación -->
     <div class="seccion">
-        <h1>Nuestro Tiempito</h1>
-        <p>❤️<br></p>
+        <h1>Nuestro Tiempo Juntos</h1>
+        <p style="font-size: 1.2rem; color: var(--rosa-oscuro);">Cada segundo a tu lado es un regalo 💖</p>
         
         <div id="contador-relacion">
-            <div class="tiempo-box">
-                <span id="anos">0</span>
-                <span>Años</span>
+            <!-- Años -->
+            <div class="grupo-tiempo">
+                <div class="tiempo-box">
+                    <span id="anos">0</span>
+                    <span>Años</span>
+                </div>
             </div>
-            <div class="tiempo-box">
-                <span id="meses">0</span>
-                <span>Meses</span>
+            
+            <div class="separador">:</div>
+            
+            <!-- Meses -->
+            <div class="grupo-tiempo">
+                <div class="tiempo-box">
+                    <span id="meses">0</span>
+                    <span>Meses</span>
+                </div>
             </div>
-            <div class="tiempo-box">
-                <span id="dias">0</span>
-                <span>Días</span>
+            
+            <div class="separador">:</div>
+            
+            <!-- Días -->
+            <div class="grupo-tiempo">
+                <div class="tiempo-box">
+                    <span id="dias">0</span>
+                    <span>Días</span>
+                </div>
             </div>
-            <div class="tiempo-box">
-                <span id="horas">0</span>
-                <span>Horas</span>
+            
+            <div class="separador">:</div>
+            
+            <!-- Horas -->
+            <div class="grupo-tiempo">
+                <div class="tiempo-box">
+                    <span id="horas">0</span>
+                    <span>Horas</span>
+                </div>
             </div>
-            <div class="tiempo-box">
-                <span id="minutos">0</span>
-                <span>Minutos</span>
+            
+            <div class="separador">:</div>
+            
+            <!-- Minutos -->
+            <div class="grupo-tiempo">
+                <div class="tiempo-box">
+                    <span id="minutos">0</span>
+                    <span>Minutos</span>
+                </div>
             </div>
-            <div class="tiempo-box">
-                <span id="segundos">0</span>
-                <span>Segundos</span>
+            
+            <div class="separador">:</div>
+            
+            <!-- Segundos -->
+            <div class="grupo-tiempo">
+                <div class="tiempo-box">
+                    <span id="segundos">0</span>
+                    <span>Segundos</span>
+                </div>
             </div>
         </div>
         
-        <p id="dias-totales">0 días exactos de felicidad</p>
-        <p id="proximo-aniversario"></p>
+        <div id="dias-totales">0 días exactos de felicidad</div>
+        <div id="proximo-aniversario"></div>
+        <div class="fecha-inicio">Desde el 9 de septiembre de 2024</div>
     </div>
     
-    <!-- Calendario preciso -->
+    <!-- Calendario interactivo -->
     <div class="seccion">
-        <h2>Nuestros Días Especiales</h2>
+        <div class="calendario-header">
+            <button class="calendario-btn" id="prev-month">←</button>
+            <div class="calendario-title" id="calendario-title">Mes y Año</div>
+            <button class="calendario-btn" id="next-month">→</button>
+        </div>
+        
         <div class="mes" id="calendario-mes"></div>
     </div>
 
@@ -136,12 +457,16 @@
         // FECHA EXACTA DE INICIO (9/9/2024 12:00 PM)
         const fechaInicio = new Date(2024, 8, 9, 12, 0, 0); // Mes 8 = septiembre (0-11)
         
+        // Variables para el calendario
+        let mesActual = new Date().getMonth();
+        let añoActual = new Date().getFullYear();
+        
         // FUNCIÓN PARA AÑOS BISIESTOS
         function esBisiesto(año) {
             return (año % 4 === 0 && año % 100 !== 0) || año % 400 === 0;
         }
         
-        // CÁLCULO PRECISO DEL TIEMPO TRANSCURRIDO (CON MINUTOS Y SEGUNDOS)
+        // CÁLCULO PRECISO DEL TIEMPO TRANSCURRIDO
         function actualizarReloj() {
             const ahora = new Date();
             
@@ -212,16 +537,20 @@
             document.getElementById('dias-totales').textContent = `${diasTotales} días exactos de felicidad`;
             document.getElementById('proximo-aniversario').textContent = 
                 `Próximo mesiversario: ${proxMesiversario.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })}`;
+            
+            // Efecto de confeti en cambios completos de minuto
+            if (segundos === 0 && minutos % 5 === 0) {
+                crearConfeti();
+            }
         }
         
-        // CALENDARIO PRECISO (considera meses con diferente duración)
-        function generarCalendario() {
+        // GENERAR CALENDARIO PARA UN MES Y AÑO ESPECÍFICO
+        function generarCalendario(mes, año) {
             const hoy = new Date();
-            const mesActual = hoy.getMonth();
-            const añoActual = hoy.getFullYear();
+            const esMesActual = (mes === hoy.getMonth()) && (año === hoy.getFullYear());
             
-            // Obtener último día del mes (considerando febrero en bisiestos)
-            const ultimoDia = new Date(añoActual, mesActual + 1, 0).getDate();
+            // Obtener último día del mes
+            const ultimoDia = new Date(año, mes + 1, 0).getDate();
             
             // Generar calendario
             let calendarioHTML = '';
@@ -229,36 +558,114 @@
             
             // Encabezados de días
             diasSemana.forEach(dia => {
-                calendarioHTML += `<div style="font-weight:bold;color:#ff6b81;padding:10px;">${dia}</div>`;
+                calendarioHTML += `<div class="dia-header">${dia}</div>`;
             });
             
             // Primer día del mes
-            const primerDia = new Date(añoActual, mesActual, 1).getDay();
+            const primerDia = new Date(año, mes, 1).getDay();
             
             // Espacios vacíos
             for (let i = 0; i < primerDia; i++) {
-                calendarioHTML += `<div style="padding:12px 0;"></div>`;
+                calendarioHTML += `<div class="dia"></div>`;
             }
             
             // Días del mes
             for (let dia = 1; dia <= ultimoDia; dia++) {
-                const esHoy = (dia === hoy.getDate()) && (mesActual === hoy.getMonth());
+                const esHoy = esMesActual && (dia === hoy.getDate());
                 const esAniversario = (dia === 9); // Todos los días 9
                 
-                let estilo = "padding:12px 0;border-radius:50%;background:rgba(248,248,248,0.7);";
-                if (esAniversario) estilo += "background:#ff6b81;color:white;font-weight:bold;transform:scale(1.1);box-shadow:0 3px 10px rgba(210,51,105,0.3);";
-                if (esHoy) estilo += "border:2px solid #d23369;background:rgba(255,255,255,0.9);";
+                let clase = "dia";
+                if (esAniversario) clase += " aniversario";
+                if (esHoy) clase += " hoy";
                 
-                calendarioHTML += `<div style="${estilo}">${dia}</div>`;
+                calendarioHTML += `<div class="${clase}">${dia}</div>`;
             }
+            
+            // Actualizar título del calendario
+            const opciones = { month: 'long', year: 'numeric' };
+            document.getElementById('calendario-title').textContent = 
+                new Date(año, mes).toLocaleDateString('es-ES', opciones).toUpperCase();
             
             document.getElementById('calendario-mes').innerHTML = calendarioHTML;
         }
         
+        // NAVEGACIÓN DEL CALENDARIO
+        document.getElementById('prev-month').addEventListener('click', () => {
+            mesActual--;
+            if (mesActual < 0) {
+                mesActual = 11;
+                añoActual--;
+            }
+            generarCalendario(mesActual, añoActual);
+        });
+        
+        document.getElementById('next-month').addEventListener('click', () => {
+            mesActual++;
+            if (mesActual > 11) {
+                mesActual = 0;
+                añoActual++;
+            }
+            generarCalendario(mesActual, añoActual);
+        });
+        
+        // Crear partículas de fondo
+        function crearParticulas() {
+            const particleCount = 20;
+            const container = document.getElementById('particles');
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 20 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posición inicial aleatoria
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                // Duración y delay de animación aleatorios
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 10;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Crear efecto de confeti
+        function crearConfeti() {
+            const colors = ['#d23369', '#ff6b81', '#ff8fa3', '#ffb3c1', '#ffffff'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 2 + 2 + 's';
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                
+                document.body.appendChild(confetti);
+                
+                // Eliminar confeti después de la animación
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+        
         // Iniciar
+        crearParticulas();
         setInterval(actualizarReloj, 1000);
         actualizarReloj();
-        generarCalendario();
+        generarCalendario(mesActual, añoActual);
+        
+        // Efecto de confeti inicial
+        setTimeout(crearConfeti, 1500);
     </script>
 </body>
 </html>
