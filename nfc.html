@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Lector NFC</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lector NFC</h1>
+  <button onclick="leerNFC()">Leer tarjeta</button>
+  <div id="output"></div>
+
+  <script>
+    async function leerNFC() {
+      if ('NDEFReader' in window) {
+        try {
+          const ndef = new NDEFReader();
+          await ndef.scan();
+          document.getElementById("output").textContent = "Acerca la tarjeta NFC...";
+          
+          ndef.onreading = event => {
+            const { serialNumber, message } = event;
+            let data = `Número de serie: ${serialNumber}\n`;
+
+            for (const record of message.records) {
+              if (record.recordType === "text") {
+                const textDecoder = new TextDecoder(record.encoding);
+                data += `Texto: ${textDecoder.decode(record.data)}\n`;
+              } else {
+                data += `Tipo de dato no soportado: ${record.recordType}\n`;
+              }
+            }
+
+            document.getElementById("output").textContent = data;
+          };
+        } catch (error) {
+          document.getElementById("output").textContent = "Error: " + error;
+        }
+      } else {
+        document.getElementById("output").textContent = "Web NFC no está disponible en este dispositivo/navegador.";
+      }
+    }
+  </script>
+</body>
+</html>
